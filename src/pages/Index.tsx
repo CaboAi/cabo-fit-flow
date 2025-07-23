@@ -231,42 +231,42 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground text-white py-12">
+      <footer className="bg-card text-foreground py-12 border-t border-border">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent mb-4">
+              <h3 className="text-2xl font-bold text-accent mb-4">
                 Cabo Fit Pass
               </h3>
-              <p className="text-white/80">
+              <p className="text-muted-foreground">
                 Your fitness passport to Cabo San Lucas. Discover, book, and enjoy unlimited access to the best studios.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Classes</h4>
-              <ul className="space-y-2 text-white/80">
-                <li>Yoga</li>
-                <li>HIIT</li>
-                <li>Pilates</li>
-                <li>Cycling</li>
+              <h4 className="font-semibold mb-4 text-foreground">Classes</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="hover:text-accent cursor-pointer transition-colors">Yoga</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">HIIT</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Pilates</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Cycling</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-white/80">
-                <li>About</li>
-                <li>Careers</li>
-                <li>Press</li>
-                <li>Contact</li>
+              <h4 className="font-semibold mb-4 text-foreground">Company</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="hover:text-accent cursor-pointer transition-colors">About</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Careers</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Press</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Contact</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-white/80">
-                <li>Help Center</li>
-                <li>Safety</li>
-                <li>Terms</li>
-                <li>Privacy</li>
+              <h4 className="font-semibold mb-4 text-foreground">Support</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="hover:text-accent cursor-pointer transition-colors">Help Center</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Safety</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Terms</li>
+                <li className="hover:text-accent cursor-pointer transition-colors">Privacy</li>
               </ul>
             </div>
           </div>

@@ -50,10 +50,10 @@ const ClassCard = ({
             {difficulty}
           </span>
         </div>
-        <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1">
+        <div className="absolute top-3 right-3 bg-card/95 backdrop-blur-sm rounded-full px-2 py-1 border border-border">
           <div className="flex items-center gap-1">
-            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-            <span className="text-xs font-medium">{rating}</span>
+            <Star className="h-3 w-3 fill-accent text-accent" />
+            <span className="text-xs font-medium text-foreground">{rating}</span>
           </div>
         </div>
       </div>

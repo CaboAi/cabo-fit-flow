@@ -9,7 +9,7 @@ const Header = () => {
           <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center">
             <span className="text-white font-black text-xl">F</span>
           </div>
-          <span className="text-2xl font-black text-foreground tracking-tight">FITPASS</span>
+          <span className="text-2xl font-black text-foreground tracking-tight">CABO FIT PASS</span>
         </div>
         
         <nav className="hidden md:flex items-center gap-12">

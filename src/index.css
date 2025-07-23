@@ -8,44 +8,41 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark CaboFitPass theme - green, black, white */
-    --background: 222 100% 4%;
-    --foreground: 0 0% 100%;
+    /* Dark CaboFitPass theme - pure black, green, white */
+    --background: 0 0% 3%;
+    --foreground: 0 0% 98%;
 
-    --card: 222 100% 6%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222 100% 6%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 100%;
-    --primary-foreground: 222 100% 4%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 3%;
 
-    --secondary: 222 100% 8%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 0 0% 8%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 222 100% 8%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 60%;
 
     --accent: 160 84% 39%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 222 100% 12%;
-    --input: 222 100% 12%;
+    --border: 0 0% 10%;
+    --input: 0 0% 10%;
     --ring: 160 84% 39%;
 
     /* Custom colors */
     --accent-glow: 160 84% 50%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(222 100% 4%), hsl(222 100% 8%));
-    
     /* Shadows */
-    --shadow-card: 0 4px 20px hsl(222 100% 2% / 0.5);
-    --shadow-lg: 0 10px 25px hsl(222 100% 2% / 0.3);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.5);
+    --shadow-lg: 0 10px 25px hsl(0 0% 0% / 0.3);
 
     --radius: 0.5rem;
 
