@@ -14,15 +14,33 @@ const Header = () => {
         </div>
         
         <nav className="hidden md:flex items-center gap-12">
-          <Link to="/#classes" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+          <a 
+            href="/#classes" 
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                document.getElementById('classes')?.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide"
+          >
             CLASSES
-          </Link>
+          </a>
           <Link to="/studios" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
             STUDIOS
           </Link>
-          <Link to="/#plans" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+          <a 
+            href="/#plans" 
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide"
+          >
             PRICING
-          </Link>
+          </a>
         </nav>
         
         <div className="flex items-center gap-4">
