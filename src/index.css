@@ -8,48 +8,43 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Clean minimal palette inspired by Base44 design */
-    --background: 220 15% 95%;
-    --foreground: 220 15% 15%;
+    /* Base44 inspired color palette - exact match */
+    --background: 240 20% 97%;
+    --foreground: 240 10% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 240 10% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 240 10% 10%;
 
-    --primary: 220 15% 15%;
+    --primary: 240 10% 10%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 15% 15%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 10% 10%;
 
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 15% 45%;
+    --muted: 240 5% 94%;
+    --muted-foreground: 240 4% 50%;
 
-    --accent: 198 93% 60%;
+    --accent: 197 100% 45%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 85%;
-    --input: 220 15% 85%;
-    --ring: 198 93% 60%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 197 100% 45%;
 
-    /* Custom colors */
-    --accent-glow: 198 93% 70%;
-    --primary-glow: 220 15% 25%;
+    /* Custom design tokens */
+    --accent-glow: 197 100% 55%;
     
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--accent) / 0.95), hsl(var(--accent-glow) / 0.85));
-    
-    /* Shadows */
-    --shadow-glow: 0 0 30px hsl(var(--accent-glow) / 0.3);
-    --shadow-card: 0 4px 20px hsl(220 15% 15% / 0.08);
+    /* Clean shadows */
+    --shadow-card: 0 1px 3px hsl(240 5% 15% / 0.1), 0 1px 2px hsl(240 5% 15% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(240 5% 15% / 0.1), 0 4px 6px -2px hsl(240 5% 15% / 0.05);
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -115,8 +110,8 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    letter-spacing: -0.01em;
+    line-height: 1.5;
+    letter-spacing: -0.025em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
