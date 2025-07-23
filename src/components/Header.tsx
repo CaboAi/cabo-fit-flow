@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Search, User, Menu } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -16,9 +17,9 @@ const Header = () => {
           <a href="#classes" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
             CLASSES
           </a>
-          <a href="#studios" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+          <Link to="/studios" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
             STUDIOS
-          </a>
+          </Link>
           <a href="#plans" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
             PRICING
           </a>
