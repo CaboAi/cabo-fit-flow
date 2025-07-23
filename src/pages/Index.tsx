@@ -183,7 +183,7 @@ const Index = () => {
           </div>
           
           <div className="text-center mt-8">
-            <Button variant="default" size="lg">
+            <Button variant="accent" size="lg">
               View All Classes
             </Button>
           </div>

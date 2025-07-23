@@ -88,7 +88,7 @@ const ClassCard = ({
             <p className="text-sm text-muted-foreground">with</p>
             <p className="font-medium text-foreground">{instructor}</p>
           </div>
-          <Button variant="default" size="sm" className="min-w-20">
+          <Button variant="accent" size="sm" className="min-w-20">
             Book
           </Button>
         </div>
