@@ -7,15 +7,20 @@ const Hero = () => {
         <div className="bg-card rounded-lg shadow-card p-8 border border-border">
           {/* Logo */}
           <div className="flex justify-center mb-8">
-            <div className="w-16 h-16 bg-accent rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">CF</span>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-accent rounded-md flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+              </div>
+              <span className="text-xl font-bold text-foreground">CaboFitPass</span>
             </div>
           </div>
           
           {/* Welcome Text */}
           <div className="text-center mb-8">
             <h1 className="text-2xl font-semibold text-foreground mb-2">
-              Welcome to CaboFit
+              Welcome to Cabo Fit Pass
             </h1>
             <p className="text-muted-foreground">
               Sign in to continue
@@ -44,7 +49,7 @@ const Hero = () => {
                 <input 
                   type="email" 
                   placeholder="you@example.com"
-                  className="w-full mt-1 px-3 py-2 border border-input rounded-md focus:ring-2 focus:ring-ring focus:border-ring transition-colors"
+                  className="w-full mt-1 px-3 py-2 bg-background border border-input rounded-md focus:ring-2 focus:ring-accent focus:border-accent transition-colors text-foreground"
                 />
               </div>
               
@@ -53,17 +58,17 @@ const Hero = () => {
                 <input 
                   type="password" 
                   placeholder="••••••••"
-                  className="w-full mt-1 px-3 py-2 border border-input rounded-md focus:ring-2 focus:ring-ring focus:border-ring transition-colors"
+                  className="w-full mt-1 px-3 py-2 bg-background border border-input rounded-md focus:ring-2 focus:ring-accent focus:border-accent transition-colors text-foreground"
                 />
               </div>
               
-              <Button className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button className="w-full h-12 bg-accent text-accent-foreground hover:bg-accent/90">
                 Sign in
               </Button>
             </div>
             
             <div className="flex justify-between text-sm text-muted-foreground">
-              <a href="#" className="hover:text-foreground">Forgot password?</a>
+              <a href="#" className="hover:text-accent">Forgot password?</a>
               <span>Need an account? <a href="#" className="text-accent hover:underline">Sign up</a></span>
             </div>
           </div>

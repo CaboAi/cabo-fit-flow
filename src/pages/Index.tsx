@@ -235,8 +235,8 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4">
-                CaboFit
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent mb-4">
+                Cabo Fit Pass
               </h3>
               <p className="text-white/80">
                 Your fitness passport to Cabo San Lucas. Discover, book, and enjoy unlimited access to the best studios.
