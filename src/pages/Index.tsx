@@ -138,13 +138,13 @@ const Index = () => {
       <Hero />
       
       {/* Featured Classes Section */}
-      <section id="classes" className="py-16 bg-secondary/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Discover Your Next Workout
+      <section id="classes" className="py-32 bg-card">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-7xl font-black mb-6 text-foreground tracking-tighter">
+              DISCOVER CLASSES
             </h2>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-xl text-muted-foreground mb-12 font-medium max-w-3xl mx-auto">
               From sunrise yoga to high-intensity training - find the perfect class for you
             </p>
             
@@ -191,13 +191,13 @@ const Index = () => {
       </section>
 
       {/* Pricing Section */}
-      <section id="plans" className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Choose Your Fitness Journey
+      <section id="plans" className="py-32 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-7xl font-black mb-6 text-foreground tracking-tighter">
+              CHOOSE YOUR PLAN
             </h2>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground font-medium max-w-3xl mx-auto">
               Flexible plans for locals and tourists alike
             </p>
           </div>
@@ -211,20 +211,20 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-hero">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Transform Your Fitness?
+      <section className="py-32 bg-gradient-hero">
+        <div className="container mx-auto px-6 text-center">
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter">
+            TRANSFORM TODAY
           </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-white/80 mb-12 max-w-3xl mx-auto font-medium">
             Join thousands of fitness enthusiasts in Cabo San Lucas. Your perfect workout is just a tap away.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="glass" size="lg" className="text-lg">
-              Start Free Trial
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button variant="accent" size="lg" className="text-lg py-4 px-8 font-bold">
+              START FREE TRIAL
             </Button>
-            <Button variant="outline" size="lg" className="bg-white/10 border-white/30 text-white hover:bg-white/20">
-              Learn More
+            <Button variant="glass" size="lg" className="text-lg py-4 px-8 font-semibold">
+              LEARN MORE
             </Button>
           </div>
         </div>

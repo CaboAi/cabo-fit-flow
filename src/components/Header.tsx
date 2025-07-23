@@ -3,35 +3,35 @@ import { Search, User, Menu } from "lucide-react";
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center space-x-8">
-          <h1 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            CaboFit
-          </h1>
-          <nav className="hidden md:flex space-x-6">
-            <a href="#classes" className="text-foreground hover:text-primary transition-colors">
-              Classes
-            </a>
-            <a href="#studios" className="text-foreground hover:text-primary transition-colors">
-              Studios
-            </a>
-            <a href="#plans" className="text-foreground hover:text-primary transition-colors">
-              Plans
-            </a>
-          </nav>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center">
+            <span className="text-white font-black text-xl">F</span>
+          </div>
+          <span className="text-2xl font-black text-foreground tracking-tight">FITPASS</span>
         </div>
         
-        <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="icon" className="hidden md:flex">
-            <Search className="h-5 w-5" />
-          </Button>
-          <Button variant="outline">Log In</Button>
-          <Button variant="hero">Sign Up</Button>
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Menu className="h-5 w-5" />
-          </Button>
+        <nav className="hidden md:flex items-center gap-12">
+          <a href="#classes" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+            CLASSES
+          </a>
+          <a href="#studios" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+            STUDIOS
+          </a>
+          <a href="#plans" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+            PRICING
+          </a>
+        </nav>
+        
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" className="font-semibold">SIGN IN</Button>
+          <Button variant="accent" className="font-bold">GET STARTED</Button>
         </div>
+        
+        <Button variant="ghost" size="icon" className="md:hidden">
+          <Menu className="h-6 w-6" />
+        </Button>
       </div>
     </header>
   );

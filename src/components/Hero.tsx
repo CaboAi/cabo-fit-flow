@@ -16,42 +16,41 @@ const Hero = () => {
       </div>
       
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-2xl text-white">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Your Fitness
-            <span className="block text-accent-glow">Passport</span>
-            to Cabo
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="max-w-3xl text-white">
+          <h1 className="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter">
+            YOUR FITNESS
+            <span className="block text-accent bg-gradient-to-r from-accent to-accent-glow bg-clip-text text-transparent">REVOLUTION</span>
+            STARTS HERE
           </h1>
           
-          <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed">
-            Access 50+ studios and unlimited classes across Cabo San Lucas. 
-            From beachside yoga to high-intensity training - discover your perfect workout.
+          <p className="text-xl md:text-2xl mb-12 text-white/80 leading-relaxed font-medium max-w-2xl">
+            Unlimited access to Cabo's premier fitness studios. One membership, endless possibilities.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button variant="glass" size="lg" className="text-lg">
-              <Play className="mr-2 h-5 w-5" />
-              Start Your Journey
+          <div className="flex flex-col sm:flex-row gap-6 mb-16">
+            <Button variant="accent" size="lg" className="text-lg py-4 px-8 font-bold">
+              <Play className="mr-3 h-6 w-6" />
+              START YOUR JOURNEY
             </Button>
-            <Button variant="outline" size="lg" className="bg-white/10 border-white/30 text-white hover:bg-white/20">
-              Explore Classes
+            <Button variant="glass" size="lg" className="text-lg py-4 px-8 font-semibold">
+              EXPLORE CLASSES
             </Button>
           </div>
           
           {/* Stats */}
-          <div className="flex flex-wrap gap-8 text-white/90">
-            <div className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" />
-              <span className="font-medium">50+ Studios</span>
+          <div className="flex flex-wrap gap-12 text-white">
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-accent rounded-full"></div>
+              <span className="font-bold text-lg tracking-wide">50+ STUDIOS</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              <span className="font-medium">500+ Classes Weekly</span>
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-accent rounded-full"></div>
+              <span className="font-bold text-lg tracking-wide">500+ CLASSES</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Play className="h-5 w-5" />
-              <span className="font-medium">From $500 MXN/month</span>
+            <div className="flex items-center gap-3">
+              <div className="w-2 h-2 bg-accent rounded-full"></div>
+              <span className="font-bold text-lg tracking-wide">FROM $500 MXN</span>
             </div>
           </div>
         </div>
