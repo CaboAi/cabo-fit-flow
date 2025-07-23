@@ -5,22 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold tracking-tight ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-accent text-accent-foreground hover:bg-accent/90 shadow-glow hover:shadow-xl hover:scale-[1.02] transition-all duration-200",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-border bg-card hover:bg-accent hover:text-accent-foreground hover:border-accent",
+          "border border-border bg-transparent hover:bg-muted hover:text-foreground",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-muted hover:text-foreground",
-        link: "text-accent underline-offset-4 hover:underline font-medium",
-        hero: "bg-gradient-hero text-white font-bold shadow-glow hover:shadow-xl hover:scale-[1.02] transition-all duration-200",
-        accent: "bg-accent text-accent-foreground font-bold hover:bg-accent/90 hover:scale-[1.02] shadow-lg transition-all duration-200",
-        glass: "bg-white/5 backdrop-blur-sm text-white border border-white/10 hover:bg-white/10 font-medium transition-all duration-200",
+        link: "text-accent underline-offset-4 hover:underline",
+        accent: "bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm",
       },
       size: {
         default: "h-10 px-4 py-2",

@@ -54,7 +54,7 @@ const PricingCard = ({
         </ul>
         
         <Button 
-          variant={isPopular ? "hero" : "default"} 
+          variant={isPopular ? "accent" : "default"} 
           className="w-full mt-6"
           size="lg"
         >

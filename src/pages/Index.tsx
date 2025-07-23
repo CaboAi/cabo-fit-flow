@@ -138,25 +138,25 @@ const Index = () => {
       <Hero />
       
       {/* Featured Classes Section */}
-      <section id="classes" className="py-32 bg-card">
+      <section id="classes" className="py-24 bg-background">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-black mb-6 text-foreground tracking-tighter">
-              DISCOVER CLASSES
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Discover Classes
             </h2>
-            <p className="text-xl text-muted-foreground mb-12 font-medium max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
               From sunrise yoga to high-intensity training - find the perfect class for you
             </p>
             
             {/* Search and Filter Bar */}
             <div className="max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row gap-4 bg-white rounded-lg shadow-card p-4">
+              <div className="flex flex-col md:flex-row gap-4 bg-card rounded-xl shadow-card p-6 border border-border">
                 <div className="flex-1 relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                   <input 
                     type="text" 
                     placeholder="Search classes or studios..."
-                    className="w-full pl-10 pr-4 py-2 border border-input rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
                   />
                 </div>
                 <Button variant="outline" className="flex items-center gap-2">
@@ -191,13 +191,13 @@ const Index = () => {
       </section>
 
       {/* Pricing Section */}
-      <section id="plans" className="py-32 bg-background">
+      <section id="plans" className="py-24 bg-card">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl font-black mb-6 text-foreground tracking-tighter">
-              CHOOSE YOUR PLAN
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Choose Your Plan
             </h2>
-            <p className="text-xl text-muted-foreground font-medium max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Flexible plans for locals and tourists alike
             </p>
           </div>
@@ -211,19 +211,19 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 bg-gradient-hero">
+      <section className="py-24 bg-gradient-hero">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter">
-            TRANSFORM TODAY
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+            Ready to Transform?
           </h2>
-          <p className="text-xl text-white/80 mb-12 max-w-3xl mx-auto font-medium">
+          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
             Join thousands of fitness enthusiasts in Cabo San Lucas. Your perfect workout is just a tap away.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button variant="accent" size="lg" className="text-lg py-4 px-8 font-bold">
+            <Button variant="accent" size="lg" className="text-lg py-4 px-8 font-semibold">
               START FREE TRIAL
             </Button>
-            <Button variant="glass" size="lg" className="text-lg py-4 px-8 font-semibold">
+            <Button variant="outline" size="lg" className="text-lg py-4 px-8 font-semibold border-white/20 text-white hover:bg-white/10">
               LEARN MORE
             </Button>
           </div>
