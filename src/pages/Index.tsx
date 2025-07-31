@@ -1,5 +1,4 @@
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
 import ClassCard from "@/components/ClassCard";
 import PricingCard from "@/components/PricingCard";
 import { Button } from "@/components/ui/button";
@@ -135,7 +134,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <Hero />
       
       {/* Featured Classes Section */}
       <section id="classes" className="py-24 bg-background">

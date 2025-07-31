@@ -1,8 +1,36 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu } from "lucide-react";
+import { Search, User, Menu, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Header = () => {
+  const { toast } = useToast();
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Error signing out",
+          description: error.message,
+        });
+      } else {
+        toast({
+          title: "Signed out successfully",
+          description: "You've been logged out of your account.",
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: "Please try again.",
+      });
+    }
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
@@ -44,8 +72,18 @@ const Header = () => {
         </nav>
         
         <div className="flex items-center gap-4">
-          <Button variant="ghost" className="font-semibold">SIGN IN</Button>
-          <Button variant="accent" className="font-bold">GET STARTED</Button>
+          <Button variant="ghost" className="font-semibold">
+            <User className="w-4 h-4 mr-2" />
+            PROFILE
+          </Button>
+          <Button 
+            variant="outline" 
+            className="font-semibold" 
+            onClick={handleLogout}
+          >
+            <LogOut className="w-4 h-4 mr-2" />
+            SIGN OUT
+          </Button>
         </div>
         
         <Button variant="ghost" size="icon" className="md:hidden">
