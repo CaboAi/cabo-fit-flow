@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import ClassCard from "@/components/ClassCard";
 import PricingCard from "@/components/PricingCard";
 import { Button } from "@/components/ui/button";
+import { useClasses, useBookClass } from "@/hooks/useClasses";
 import { Search, Filter, Calendar, MapPin } from "lucide-react";
 
 // Import class images
@@ -11,65 +12,12 @@ import cyclingImage from "@/assets/cycling-class.jpg";
 import pilatesImage from "@/assets/pilates-class.jpg";
 
 const Index = () => {
-  // Sample class data
-  const sampleClasses = [
-    {
-      id: "1",
-      name: "Sunset Beach Yoga",
-      studio: "Ocean Breeze Studio",
-      instructor: "Maria Rodriguez",
-      time: "6:30 PM",
-      duration: 60,
-      spots: 8,
-      maxSpots: 15,
-      rating: 4.9,
-      difficulty: "Beginner" as const,
-      type: "Yoga",
-      image: yogaImage
-    },
-    {
-      id: "2", 
-      name: "HIIT Beachside",
-      studio: "Cabo Fitness Club",
-      instructor: "Carlos Martinez",
-      time: "7:00 AM",
-      duration: 45,
-      spots: 12,
-      maxSpots: 20,
-      rating: 4.8,
-      difficulty: "Advanced" as const,
-      type: "HIIT",
-      image: hiitImage
-    },
-    {
-      id: "3",
-      name: "Power Cycling",
-      studio: "Ride Cabo",
-      instructor: "Ana Lopez",
-      time: "8:00 AM", 
-      duration: 50,
-      spots: 5,
-      maxSpots: 25,
-      rating: 4.7,
-      difficulty: "Intermediate" as const,
-      type: "Cycling",
-      image: cyclingImage
-    },
-    {
-      id: "4",
-      name: "Core Pilates",
-      studio: "Balance Studio",
-      instructor: "Sofia Chen",
-      time: "9:30 AM",
-      duration: 55,
-      spots: 3,
-      maxSpots: 12,
-      rating: 4.9,
-      difficulty: "Intermediate" as const,
-      type: "Pilates", 
-      image: pilatesImage
-    }
-  ];
+  const { data: classes, isLoading, error } = useClasses();
+  const bookClass = useBookClass();
+
+  const handleBookClass = (classId: string) => {
+    bookClass.mutate({ classId });
+  };
 
   // Sample pricing plans
   const pricingPlans = [
@@ -175,9 +123,28 @@ const Index = () => {
           
           {/* Class Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {sampleClasses.map((classItem) => (
-              <ClassCard key={classItem.id} {...classItem} />
-            ))}
+            {isLoading ? (
+              <div className="col-span-full text-center py-8">
+                <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-muted-foreground">Loading classes...</p>
+              </div>
+            ) : error ? (
+              <div className="col-span-full text-center py-8">
+                <p className="text-destructive">Failed to load classes. Please try again.</p>
+              </div>
+            ) : classes?.length === 0 ? (
+              <div className="col-span-full text-center py-8">
+                <p className="text-muted-foreground">No classes available at the moment.</p>
+              </div>
+            ) : (
+              classes?.map((classItem) => (
+                <ClassCard 
+                  key={classItem.id} 
+                  {...classItem} 
+                  onBook={handleBookClass}
+                />
+              ))
+            )}
           </div>
           
           <div className="text-center mt-8">
