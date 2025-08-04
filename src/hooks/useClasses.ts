@@ -40,6 +40,44 @@ export const useClasses = () => {
   });
 };
 
+export const useGyms = () => {
+  return useQuery({
+    queryKey: ["gyms"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("gyms")
+        .select("*");
+
+      if (error) throw error;
+      return data;
+    },
+  });
+};
+
+export const useClassesByGym = (gymId: string) => {
+  return useQuery({
+    queryKey: ["classes-by-gym", gymId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("classes")
+        .select(`
+          *,
+          gym:gyms(*),
+          bookings(count)
+        `)
+        .eq("gym_id", gymId);
+
+      if (error) throw error;
+
+      return data.map((item: any) => ({
+        ...item,
+        bookings_count: item.bookings?.[0]?.count || 0,
+      })) as ClassWithGym[];
+    },
+    enabled: !!gymId,
+  });
+};
+
 export const useUserBookings = () => {
   return useQuery({
     queryKey: ["user-bookings"],

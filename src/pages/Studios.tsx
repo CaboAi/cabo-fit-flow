@@ -1,59 +1,28 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, Star, Users, Wifi, Car, Coffee } from "lucide-react";
+import { MapPin, Clock, Star, Loader2 } from "lucide-react";
+import { useGyms } from "@/hooks/useClasses";
+import StudioClassModal from "@/components/StudioClassModal";
 
 const Studios = () => {
-  const studios = [
-    {
-      id: "1",
-      name: "Ocean Breeze Studio",
-      description: "Beachfront yoga and meditation classes with ocean views",
-      address: "Playa El Médano, Cabo San Lucas",
-      rating: 4.9,
-      reviews: 234,
-      image: "/lovable-uploads/9ab08d21-9a91-4aad-b6be-474299c842d9.png",
-      amenities: ["Ocean View", "Parking", "WiFi", "Showers"],
-      hours: "6:00 AM - 9:00 PM",
-      classes: ["Yoga", "Meditation", "Pilates"]
-    },
-    {
-      id: "2", 
-      name: "Cabo Fitness Club",
-      description: "High-intensity training and strength classes in downtown Cabo",
-      address: "Centro, Cabo San Lucas",
-      rating: 4.8,
-      reviews: 189,
-      image: "/lovable-uploads/9ab08d21-9a91-4aad-b6be-474299c842d9.png",
-      amenities: ["AC", "Parking", "Showers", "Lockers"],
-      hours: "5:00 AM - 11:00 PM",
-      classes: ["HIIT", "CrossFit", "Strength Training"]
-    },
-    {
-      id: "3",
-      name: "Ride Cabo",
-      description: "Premium indoor cycling studio with energizing music",
-      address: "Marina District, Cabo San Lucas", 
-      rating: 4.7,
-      reviews: 156,
-      image: "/lovable-uploads/9ab08d21-9a91-4aad-b6be-474299c842d9.png",
-      amenities: ["Premium Bikes", "Sound System", "AC", "Water"],
-      hours: "6:00 AM - 8:00 PM",
-      classes: ["Cycling", "Spin", "HIIT Bike"]
-    },
-    {
-      id: "4",
-      name: "Balance Studio",
-      description: "Mindful movement and core strengthening in a serene environment",
-      address: "San José del Cabo",
-      rating: 4.9,
-      reviews: 98,
-      image: "/lovable-uploads/9ab08d21-9a91-4aad-b6be-474299c842d9.png",
-      amenities: ["Garden View", "Props Included", "WiFi", "Tea Bar"],
-      hours: "7:00 AM - 7:00 PM", 
-      classes: ["Pilates", "Barre", "Yoga"]
-    }
-  ];
+  const { data: gyms, isLoading, error } = useGyms();
+  const [selectedGymId, setSelectedGymId] = useState<string>("");
+  const [selectedGymName, setSelectedGymName] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleViewClasses = (gymId: string, gymName: string) => {
+    setSelectedGymId(gymId);
+    setSelectedGymName(gymName);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedGymId("");
+    setSelectedGymName("");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -76,70 +45,68 @@ const Studios = () => {
       {/* Studios Grid */}
       <section className="pb-24 bg-background">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {studios.map((studio) => (
-              <Card key={studio.id} className="overflow-hidden hover:shadow-card transition-all duration-300 hover:-translate-y-1">
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={studio.image} 
-                    alt={studio.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-3 right-3 bg-card/95 backdrop-blur-sm rounded-full px-2 py-1 border border-border">
-                    <div className="flex items-center gap-1">
-                      <Star className="h-3 w-3 fill-accent text-accent" />
-                      <span className="text-xs font-medium text-foreground">{studio.rating}</span>
-                      <span className="text-xs text-muted-foreground">({studio.reviews})</span>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="h-8 w-8 animate-spin" />
+              <span className="ml-2">Loading studios...</span>
+            </div>
+          ) : error ? (
+            <div className="text-center py-16">
+              <p className="text-destructive">Failed to load studios</p>
+            </div>
+          ) : !gyms || gyms.length === 0 ? (
+            <div className="text-center py-16">
+              <p className="text-muted-foreground">No studios available</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {gyms.map((gym) => (
+                <Card key={gym.id} className="overflow-hidden hover:shadow-card transition-all duration-300 hover:-translate-y-1">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={gym.logo_url || "/lovable-uploads/9ab08d21-9a91-4aad-b6be-474299c842d9.png"} 
+                      alt={gym.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  <CardHeader className="pb-4">
+                    <h3 className="text-xl font-bold text-foreground">{gym.name}</h3>
+                    <p className="text-muted-foreground">Professional fitness studio with expert instructors</p>
+                  </CardHeader>
+                  
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <MapPin className="h-4 w-4" />
+                      <span className="text-sm">{gym.location || "Location TBD"}</span>
                     </div>
-                  </div>
-                </div>
-                
-                <CardHeader className="pb-4">
-                  <h3 className="text-xl font-bold text-foreground">{studio.name}</h3>
-                  <p className="text-muted-foreground">{studio.description}</p>
-                </CardHeader>
-                
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <MapPin className="h-4 w-4" />
-                    <span className="text-sm">{studio.address}</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    <span className="text-sm">{studio.hours}</span>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {studio.classes.map((classType, index) => (
-                      <span key={index} className="bg-accent/10 text-accent px-2 py-1 rounded-md text-xs font-medium">
-                        {classType}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {studio.amenities.slice(0, 4).map((amenity, index) => (
-                      <span key={index} className="bg-secondary text-secondary-foreground px-2 py-1 rounded-md text-xs">
-                        {amenity}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  <div className="flex gap-3">
-                    <Button variant="accent" className="flex-1">
-                      View Classes
-                    </Button>
-                    <Button variant="outline" className="flex-1">
-                      Get Directions
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    
+                    <div className="flex gap-3">
+                      <Button 
+                        variant="accent" 
+                        className="flex-1"
+                        onClick={() => handleViewClasses(gym.id, gym.name)}
+                      >
+                        View Classes
+                      </Button>
+                      <Button variant="outline" className="flex-1">
+                        Get Directions
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
+
+      <StudioClassModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        gymId={selectedGymId}
+        gymName={selectedGymName}
+      />
     </div>
   );
 };
