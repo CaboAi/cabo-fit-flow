@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Classes - Cabo Fit Pass</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 40px; color: white; }
+        .header h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .nav-links { display: flex; gap: 15px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+        .nav-link { padding: 10px 20px; background: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 25px; backdrop-filter: blur(10px); }
+        .alert { padding: 15px; margin: 20px 0; border-radius: 10px; font-weight: 500; }
+        .alert-success { background: linear-gradient(135deg, #56ab2f, #a8e6cf); color: #2d5016; }
+        .alert-error { background: linear-gradient(135deg, #ff6b6b, #feca57); color: #8b0000; }
+        .classes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 30px; }
+        .class-card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+        .class-card:hover { transform: translateY(-10px); }
+        .class-title { font-size: 1.5rem; font-weight: bold; color: #333; margin-bottom: 5px; }
+        .class-gym { color: #666; font-size: 0.95rem; display: flex; align-items: center; gap: 5px; }
+        .detail-row { display: flex; justify-content: space-between; margin: 10px 0; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .capacity-bar { width: 100%; height: 8px; background: #f0f0f0; border-radius: 4px; margin: 10px 0; overflow: hidden; }
+        .capacity-fill { height: 100%; background: linear-gradient(135deg, #4caf50, #8bc34a); transition: width 0.3s ease; }
+        .form-control { width: 100%; padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; margin: 8px 0; }
+        .btn { padding: 12px 30px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; width: 100%; }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+        @media (max-width: 768px) { .classes-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-dumbbell"></i> Available Classes</h1>
+            <div class="nav-links">
+                <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="/classes" class="nav-link"><i class="fas fa-search"></i> Classes</a>
+                <a href="/dashboard" class="nav-link"><i class="fas fa-user"></i> Dashboard</a>
+            </div>
+        </div>
+
+        <% if (typeof success !== 'undefined' && success) { %>
+            <div class="alert alert-success"><i class="fas fa-check-circle"></i> <%= success %></div>
+        <% } %>
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-error"><i class="fas fa-exclamation-triangle"></i> <%= error %></div>
+        <% } %>
+
+        <div class="classes-grid">
+            <% if (classes && classes.length > 0) { %>
+                <% classes.forEach((cls, index) => { 
+                    const booked = cls.bookings ? cls.bookings.length : 0;
+                    const capacity = cls.capacity || 20;
+                    const isFull = booked >= capacity;
+                    const isEnded = new Date(cls.schedule) < new Date();
+                    const capacityPercentage = Math.min((booked / capacity) * 100, 100);
+                %> 
+                    <div class="class-card">
+                        <div class="class-title"><%= cls.title %></div>
+                        <div class="class-gym">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <%= cls.gyms ? cls.gyms.name : 'Cabo Fitness Studio' %>
+                        </div>
+
+                        <div class="detail-row">
+                            <span><i class="fas fa-clock"></i> <%= new Date(cls.schedule).toLocaleString() %></span>
+                            <span>$<%= cls.price || 25 %></span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span><i class="fas fa-users"></i> Capacity</span>
+                            <span><%= booked %>/<%= capacity %></span>
+                        </div>
+
+                        <div class="capacity-bar">
+                            <div class="capacity-fill" style="width: <%= capacityPercentage %>%"></div>
+                        </div>
+
+                        <% if (!isEnded && !isFull) { %>
+                            <form method="POST" action="/book" style="margin-top: 20px;">
+                                <input type="hidden" name="class_id" value="<%= cls.id %>">
+                                <input type="hidden" name="class_title" value="<%= cls.title %>">
+                                <input type="hidden" name="user_id" value="661db286-593a-4c1e-8ce8-fb4ea43cd58a">
+
+                                <select name="type" class="form-control" required>
+                                    <option value="drop-in">Drop-in ($<%= cls.price || 25 %>)</option>
+                                    <option value="monthly">Monthly Credits</option>
+                                    <option value="one-time">One-time Package</option>
+                                </select>
+
+                                <textarea name="notes" class="form-control" rows="2" placeholder="Notes (optional)"></textarea>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-calendar-plus"></i> Book This Class
+                                </button>
+                            </form>
+                        <% } else { %>
+                            <button class="btn btn-primary" disabled>
+                                <%= isEnded ? 'Class Ended' : 'Class Full' %>
+                            </button>
+                        <% } %>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div style="text-align: center; color: white; margin: 50px 0;">
+                    <h3>No classes available</h3>
+                    <p>Check back soon for new classes!</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

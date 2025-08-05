@@ -1,6 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, MapPin, Users, Star } from "lucide-react";
+import { useState } from "react";
+import BookingModal from "./BookingModal";
 
 interface ClassCardProps {
   id: string;
@@ -8,13 +10,16 @@ interface ClassCardProps {
   schedule: string;
   price: number;
   capacity: number;
+  gym_id: string;
   gym: {
+    id: string;
     name: string;
     location: string;
     logo_url: string;
   };
   bookings_count: number;
   onBook?: (classId: string) => void;
+  onBookingSuccess?: () => void;
 }
 
 const ClassCard = ({ 
@@ -23,16 +28,39 @@ const ClassCard = ({
   schedule, 
   price, 
   capacity, 
+  gym_id,
   gym, 
   bookings_count,
-  onBook
+  onBook,
+  onBookingSuccess
 }: ClassCardProps) => {
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const spotsLeft = capacity - bookings_count;
   const classTime = new Date(schedule).toLocaleTimeString([], { 
     hour: '2-digit', 
     minute: '2-digit' 
   });
   const classDate = new Date(schedule).toLocaleDateString();
+
+  const classData = {
+    id,
+    title,
+    schedule,
+    price,
+    capacity,
+    gym_id,
+    gym,
+    bookings_count
+  };
+
+  const handleBookClick = () => {
+    setIsBookingModalOpen(true);
+  };
+
+  const handleBookingSuccess = () => {
+    onBookingSuccess?.();
+    onBook?.(id);
+  };
 
   return (
     <Card className="group hover:shadow-card transition-all duration-300 hover:-translate-y-1">
@@ -89,13 +117,20 @@ const ClassCard = ({
             variant="accent" 
             size="sm" 
             className="min-w-20"
-            onClick={() => onBook?.(id)}
+            onClick={handleBookClick}
             disabled={spotsLeft <= 0}
           >
             {spotsLeft <= 0 ? "Full" : "Book"}
           </Button>
         </div>
       </CardContent>
+
+      <BookingModal 
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+        classData={classData}
+        onBookingSuccess={handleBookingSuccess}
+      />
     </Card>
   );
 };

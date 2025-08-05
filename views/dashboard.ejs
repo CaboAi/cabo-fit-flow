@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Cabo Fit Pass</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-left p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .credits-display {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .credits-display .credits-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+
+        .credits-display .credits-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section Styles */
+        .dashboard-section {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .section-header h2 {
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .section-header .badge {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Booking Cards */
+        .bookings-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .booking-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.1);
+        }
+
+        .booking-card.completed {
+            opacity: 0.7;
+        }
+
+        .booking-card.completed::after {
+            content: 'COMPLETED';
+            position: absolute;
+            top: 1rem;
+            right: -2rem;
+            background: #28a745;
+            color: white;
+            padding: 0.25rem 3rem;
+            font-size: 0.7rem;
+            transform: rotate(45deg);
+            font-weight: bold;
+        }
+
+        .booking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .booking-title h3 {
+            color: #333;
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .booking-title p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .booking-type {
+            background: #e7f3ff;
+            color: #0066cc;
+            padding: 0.25rem 0.75rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .booking-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .booking-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .booking-detail i {
+            color: #667eea;
+            font-size: 1rem;
+        }
+
+        .booking-notes {
+            background: #f0f0f0;
+            padding: 0.75rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #555;
+            font-style: italic;
+        }
+
+        .booking-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .booking-status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .booking-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .action-btn.secondary {
+            background: #6c757d;
+        }
+
+        .action-btn.secondary:hover {
+            background: #5a6268;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-right {
+                margin-top: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .booking-details {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-section {
+                padding: 1rem;
+            }
+
+            .booking-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="header-container">
+            <div class="header-left">
+                <h1>Welcome back, Mario! 👋</h1>
+                <p>Track your fitness journey and manage your bookings</p>
+            </div>
+            <div class="header-right">
+                <div class="credits-display">
+                    <div class="credits-number">1 of 4</div>
+                    <div class="credits-label">Monthly Credits Remaining</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-calendar-check"></i>
+                <div class="stat-number">3</div>
+                <div class="stat-label">Classes Booked</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <div class="stat-number">2</div>
+                <div class="stat-label">Upcoming Classes</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-check-circle"></i>
+                <div class="stat-number">1</div>
+                <div class="stat-label">Completed Classes</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-ticket-alt"></i>
+                <div class="stat-number">3</div>
+                <div class="stat-label">Credits Used</div>
+            </div>
+        </div>
+
+        <!-- Upcoming Classes Section -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>📅 Upcoming Classes</h2>
+                <span class="badge">2 Classes</span>
+            </div>
+            <div class="bookings-grid">
+                <!-- Upcoming Class 1 -->
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-title">
+                            <h3>Sunrise Beach Yoga</h3>
+                            <p>Sunset Yoga Studio • Playa El Médano</p>
+                        </div>
+                        <span class="booking-type">Monthly Credit</span>
+                    </div>
+                    <div class="booking-details">
+                        <div class="booking-detail">
+                            <i class="fas fa-calendar"></i>
+                            <span>Tomorrow • 6:00 AM</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-user"></i>
+                            <span>Maria Santos</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="booking-status completed">Payment Completed</span>
+                        </div>
+                    </div>
+                    <div class="booking-notes">
+                        <i class="fas fa-sticky-note"></i> Looking forward to sunrise yoga!
+                    </div>
+                </div>
+
+                <!-- Upcoming Class 2 -->
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-title">
+                            <h3>Reformer Flow</h3>
+                            <p>Desert Pilates • Plaza San José</p>
+                        </div>
+                        <span class="booking-type">Monthly Credit</span>
+                    </div>
+                    <div class="booking-details">
+                        <div class="booking-detail">
+                            <i class="fas fa-calendar"></i>
+                            <span>Tomorrow • 9:00 AM</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-user"></i>
+                            <span>Emma Wilson</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="booking-status completed">Payment Completed</span>
+                        </div>
+                    </div>
+                    <div class="booking-notes">
+                        <i class="fas fa-sticky-note"></i> First time trying reformer pilates
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Bookings Section -->
+        <div class="dashboard-section">
+            <div class="section-header">
+                <h2>📋 My Bookings</h2>
+                <span class="badge">All Time</span>
+            </div>
+            <div class="bookings-grid">
+                <!-- Completed Class -->
+                <div class="booking-card completed">
+                    <div class="booking-header">
+                        <div class="booking-title">
+                            <h3>Morning Yoga Flow</h3>
+                            <p>BeachFit Cabo • Medano Beach</p>
+                        </div>
+                        <span class="booking-type">Monthly Credit</span>
+                    </div>
+                    <div class="booking-details">
+                        <div class="booking-detail">
+                            <i class="fas fa-calendar"></i>
+                            <span>3 days ago • 7:00 AM</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-user"></i>
+                            <span>Sarah Johnson</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-check-circle"></i>
+                            <span class="booking-status completed">Class Completed</span>
+                        </div>
+                    </div>
+                    <div class="booking-notes">
+                        <i class="fas fa-sticky-note"></i> Great class! Very relaxing.
+                    </div>
+                </div>
+
+                <!-- Show upcoming classes again in history -->
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-title">
+                            <h3>Sunrise Beach Yoga</h3>
+                            <p>Sunset Yoga Studio • Playa El Médano</p>
+                        </div>
+                        <span class="booking-type">Monthly Credit</span>
+                    </div>
+                    <div class="booking-details">
+                        <div class="booking-detail">
+                            <i class="fas fa-calendar"></i>
+                            <span>Tomorrow • 6:00 AM</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-user"></i>
+                            <span>Maria Santos</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="booking-status completed">Payment Completed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-card">
+                    <div class="booking-header">
+                        <div class="booking-title">
+                            <h3>Reformer Flow</h3>
+                            <p>Desert Pilates • Plaza San José</p>
+                        </div>
+                        <span class="booking-type">Monthly Credit</span>
+                    </div>
+                    <div class="booking-details">
+                        <div class="booking-detail">
+                            <i class="fas fa-calendar"></i>
+                            <span>Tomorrow • 9:00 AM</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-user"></i>
+                            <span>Emma Wilson</span>
+                        </div>
+                        <div class="booking-detail">
+                            <i class="fas fa-credit-card"></i>
+                            <span class="booking-status completed">Payment Completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <a href="/classes" class="action-btn">
+                <i class="fas fa-search"></i>
+                Browse More Classes
+            </a>
+            <a href="/profile" class="action-btn secondary">
+                <i class="fas fa-user-cog"></i>
+                Manage Account
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Format relative dates dynamically
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add any dynamic date formatting or interactivity here
+            const bookingCards = document.querySelectorAll('.booking-card');
+            
+            bookingCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Could add click handler to view booking details
+                    console.log('Booking clicked');
+                });
+            });
+
+            // Demo animation for stats
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach((stat, index) => {
+                setTimeout(() => {
+                    stat.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        stat.style.transform = 'scale(1)';
+                    }, 200);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

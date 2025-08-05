@@ -1,9 +1,11 @@
 import Header from "@/components/Header";
+import Hero from "@/components/Hero";
 import ClassCard from "@/components/ClassCard";
 import PricingCard from "@/components/PricingCard";
 import { Button } from "@/components/ui/button";
 import { useClasses, useBookClass } from "@/hooks/useClasses";
 import { Search, Filter, Calendar, MapPin } from "lucide-react";
+import { useState } from "react";
 
 // Import class images
 import yogaImage from "@/assets/yoga-class.jpg";
@@ -14,10 +16,18 @@ import pilatesImage from "@/assets/pilates-class.jpg";
 const Index = () => {
   const { data: classes, isLoading, error } = useClasses();
   const bookClass = useBookClass();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("all");
 
   const handleBookClass = (classId: string) => {
     bookClass.mutate({ classId });
   };
+
+  const filteredClasses = classes?.filter(classItem => {
+    const matchesSearch = classItem.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         classItem.gym.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesSearch;
+  });
 
   // Sample pricing plans
   const pricingPlans = [
@@ -82,6 +92,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <Hero />
       
       {/* Featured Classes Section */}
       <section id="classes" className="py-24 bg-background">
@@ -102,6 +113,8 @@ const Index = () => {
                   <input 
                     type="text" 
                     placeholder="Search classes or studios..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-accent focus:border-accent transition-colors"
                   />
                 </div>
@@ -137,7 +150,7 @@ const Index = () => {
                 <p className="text-muted-foreground">No classes available at the moment.</p>
               </div>
             ) : (
-              classes?.map((classItem) => (
+              filteredClasses?.map((classItem) => (
                 <ClassCard 
                   key={classItem.id} 
                   {...classItem} 

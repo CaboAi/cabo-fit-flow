@@ -57,6 +57,9 @@ const Header = () => {
           <Link to="/studios" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
             STUDIOS
           </Link>
+          <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+            DASHBOARD
+          </Link>
           <a 
             href="/#plans" 
             onClick={(e) => {
