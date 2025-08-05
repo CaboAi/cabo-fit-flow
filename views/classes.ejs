@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cabo FitPass - Classes</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1>🏖️ Cabo FitPass</h1>
+                    <p>Your fitness journey in paradise</p>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/classes">Classes</a></li>
+                    <li><a href="/api/v1/info">API Info</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+  <div class="classes-header">
+    <h1>Available Fitness Classes</h1>
+    <p>Browse and book your next workout session</p>
+  </div>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-error">
+          <strong>Error:</strong> <%= error %>
+      </div>
+  <% } %>
+
+  <% if (typeof success !== 'undefined' && success) { %>
+      <div class="alert alert-success">
+          <strong>Success!</strong> <%= success %>
+      </div>
+  <% } %>
+
+  <div class="classes-grid">
+      <% if (classes && classes.length > 0) { %>
+          <% classes.forEach(function(classItem) { %>
+              <div class="class-card">
+                  <div class="class-header">
+                      <h3><%= classItem.title %></h3>
+                      <span class="price">$<%= classItem.price %></span>
+                  </div>
+                  
+                  <div class="class-details">
+                      <div class="detail-item">
+                          <span class="icon">🏢</span>
+                          <span><%= classItem.gyms && classItem.gyms.name ? classItem.gyms.name : 'Unknown Gym' %></span>
+                      </div>
+                      
+                      <div class="detail-item">
+                          <span class="icon">📍</span>
+                          <span><%= classItem.gyms && classItem.gyms.location ? classItem.gyms.location : 'Location TBD' %></span>
+                      </div>
+                      
+                      <div class="detail-item">
+                          <span class="icon">📅</span>
+                          <span class="format-date"><%= classItem.schedule %></span>
+                      </div>
+                      
+                      <div class="detail-item">
+                          <span class="icon">👥</span>
+                          <span>Capacity: <%= classItem.capacity %> people</span>
+                      </div>
+                      
+                      <div class="detail-item">
+                          <span class="icon">📊</span>
+                          <span>
+                              <%= classItem.bookedCount || 0 %>/<%= classItem.capacity %> booked
+                              <% if (classItem.isFull) { %>
+                                  <span class="badge badge-full">FULL</span>
+                              <% } else { %>
+                                  <span class="badge badge-available"><%= classItem.capacity - (classItem.bookedCount || 0) %> spots left</span>
+                              <% } %>
+                          </span>
+                      </div>
+                      
+                      <% if (new Date(classItem.schedule) < new Date()) { %>
+                          <div class="detail-item">
+                              <span style="color: red;">Class Ended</span>
+                          </div>
+                      <% } %>
+                  </div>
+                  
+                  <div class="class-actions">
+                      <form action="/book-class" method="post" class="book-form">
+    <input type="hidden" name="user_id" value="40ec6001-c070-426a-9d8d-45326d0d7dac">
+    <input type="hidden" name="class_id" value="<%= classItem.id %>">
+    <input type="hidden" name="class_title" value="<%= classItem.title %>">
+    <select name="type">
+      <option value="drop-in">Drop-in</option>
+      <option value="monthly">Monthly</option>
+      <option value="one-time">One-time</option>
+    </select>
+    <input type="text" name="notes" placeholder="Notes (optional)">
+    <button 
+        type="submit" 
+        class="btn <%= classItem.isFull ? 'btn-disabled' : classItem.isPast ? 'btn-disabled' : 'btn-primary' %>"
+        <%= (classItem.isFull || classItem.isPast) ? 'disabled' : '' %>
+    >
+        <% if (classItem.isFull) { %>
+            Class Full
+        <% } else if (classItem.isPast) { %>
+            Class Ended
+        <% } else { %>
+            Book Class
+        <% } %>
+    </button>
+                      </form>
+                  </div>
+              </div>
+          <% }); %>
+      <% } else { %>
+          <div class="no-classes">
+              <p>No classes available at the moment. Please check back later!</p>
+          </div>
+      <% } %>
+  </div>
+
+  <div class="info-section">
+      <h3>📋 Current Booking Settings</h3>
+      <div class="alert alert-info">
+          <strong>User ID:</strong> <%= defaultUserId %><br>
+          <strong>Status:</strong> This form will attempt to book classes with the above User ID.
+      </div>
+      
+      <h3>How to Book</h3>
+      <ol>
+          <li><strong>Create User Profile First:</strong> If you get a "User profile does not exist" error, create the profile in Supabase Dashboard</li>
+          <li>Select your booking type (drop-in, monthly, or one-time)</li>
+          <li>Add any special notes (optional)</li>
+          <li>Click "Book Class" to reserve your spot</li>
+      </ol>
+      
+      <div class="dev-instructions">
+          <h4>🔧 For Developers</h4>
+          <p>If the booking fails with "User profile does not exist", run this SQL in Supabase SQL Editor:</p>
+          <pre><code>INSERT INTO profiles (id, email, full_name, created_at, updated_at) 
+VALUES ('<%= defaultUserId %>', 'testuser@cabofit.local', 'Test User', NOW(), NOW())
+ON CONFLICT (id) DO NOTHING;</code></pre>
+      </div>
+      
+      <div class="api-info">
+          <h4>API Integration</h4>
+          <p>This UI uses the Cabo FitPass API. You can also book programmatically:</p>
+          <pre><code>POST /api/v1/book
+{
+  "user_id": "your-uuid",
+  "class_id": "class-uuid",
+  "type": "drop-in",
+  "notes": "optional notes"
+}</code></pre>
+      </div>
+  </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Cabo FitPass. Built with ❤️ in Los Cabos</p>
+        </div>
+    </footer>
+
+    <script>
+        // Format dates nicely
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateElements = document.querySelectorAll('.format-date');
+            dateElements.forEach(el => {
+                const date = new Date(el.textContent);
+                el.textContent = date.toLocaleString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

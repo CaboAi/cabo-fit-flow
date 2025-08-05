@@ -1,0 +1,79 @@
+<div class="hero">
+    <h1>Welcome to Cabo FitPass</h1>
+    <p class="tagline">Your gateway to fitness in paradise! 🏖️💪</p>
+    
+    <div class="hero-actions">
+        <a href="/classes" class="btn btn-primary btn-large">Browse Classes</a>
+        <a href="/api/v1/info" class="btn btn-secondary btn-large">API Documentation</a>
+    </div>
+</div>
+
+<div class="features">
+    <h2>Features</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">🏋️</span>
+            <h3>Multiple Gyms</h3>
+            <p>Access fitness facilities across Los Cabos with a single pass</p>
+        </div>
+        
+        <div class="feature-card">
+            <span class="feature-icon">📅</span>
+            <h3>Easy Booking</h3>
+            <p>Book classes online with our simple booking system</p>
+        </div>
+        
+        <div class="feature-card">
+            <span class="feature-icon">💳</span>
+            <h3>Flexible Options</h3>
+            <p>Choose from drop-in, monthly, or one-time bookings</p>
+        </div>
+        
+        <div class="feature-card">
+            <span class="feature-icon">🔌</span>
+            <h3>API Access</h3>
+            <p>Integrate with our RESTful API for custom solutions</p>
+        </div>
+    </div>
+</div>
+
+<div class="stats">
+    <h2>Current Stats</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number"><%= locals.gymCount || 0 %></div>
+            <div class="stat-label">Partner Gyms</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-number"><%= locals.classCount || 0 %></div>
+            <div class="stat-label">Available Classes</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-number"><%= locals.bookingCount || 0 %></div>
+            <div class="stat-label">Total Bookings</div>
+        </div>
+    </div>
+</div>
+
+<div class="api-section">
+    <h2>For Developers</h2>
+    <p>Integrate Cabo FitPass into your applications using our RESTful API.</p>
+    
+    <div class="api-endpoints">
+        <h3>Key Endpoints</h3>
+        <ul>
+            <li><code>GET /api/v1/classes</code> - List all classes</li>
+            <li><code>GET /api/v1/gyms</code> - List all gyms</li>
+            <li><code>POST /api/v1/book</code> - Create a booking</li>
+            <li><code>GET /api/v1/bookings/:userId</code> - Get user bookings</li>
+        </ul>
+    </div>
+    
+    <div class="api-example">
+        <h3>Example Request</h3>
+        <pre><code>curl -X GET http://localhost:3000/api/v1/classes \
+  -H "Content-Type: application/json"</code></pre>
+    </div>
+</div>

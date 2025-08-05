@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Cabo FitPass' %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1>🏖️ Cabo FitPass</h1>
+                    <p>Your fitness journey in paradise</p>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/classes">Classes</a></li>
+                    <li><a href="/api/v1/info">API Info</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <%- body %>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Cabo FitPass. Built with ❤️ in Los Cabos</p>
+        </div>
+    </footer>
+
+    <script>
+        // Format dates nicely
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateElements = document.querySelectorAll('.format-date');
+            dateElements.forEach(el => {
+                const date = new Date(el.textContent);
+                el.textContent = date.toLocaleString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

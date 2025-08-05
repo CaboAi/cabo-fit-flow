@@ -1,0 +1,47 @@
+{
+  "name": "cabo-fitpass-booking-system",
+  "version": "1.0.0",
+  "description": "Node.js script to fix Supabase booking system constraints and validation",
+  "main": "booking_system_fix.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "fix-bookings": "node booking_system_fix.js",
+    "test": "node -e \"console.log('Testing Supabase connection...'); require('./booking_system_fix.js')\"",
+    "test-server": "node test_booking_system.js",
+    "test-api": "node test_api_client.js",
+    "test-updated": "node test_updated_booking.js",
+    "test-fk": "node test_foreign_key_fix.js",
+    "fix-profiles": "node fix_profiles_fkey_violation.js",
+    "test-profile": "node test_profile_and_booking.js",
+    "create-user": "node create_user_and_profile.js",
+    "demo": "node demo_api_usage.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.53.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "axios": "^1.6.0",
+    "nodemon": "^3.0.0"
+  },
+  "keywords": [
+    "supabase",
+    "booking-system",
+    "mcp",
+    "cabo-fitpass",
+    "database-validation"
+  ],
+  "author": "Mario Polanco Jr <mariopjr91@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CaboAi/cabo-fit-flow.git"
+  }
+}
