@@ -15,7 +15,13 @@
     "fix-profiles": "node fix_profiles_fkey_violation.js",
     "test-profile": "node test_profile_and_booking.js",
     "create-user": "node create_user_and_profile.js",
-    "demo": "node demo_api_usage.js"
+    "demo": "node demo_api_usage.js",
+    "vite:dev": "vite",
+    "vite:build": "tsc && vite build",
+    "vite:build:dev": "vite build --mode development",
+    "vite:lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "vite:preview": "vite preview",
+    "build:dev": "vite build --mode development"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.53.0",
