@@ -10,6 +10,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Python virtual environment
 venv/
@@ -18,16 +20,19 @@ __pycache__/
 *$py.class
 
 # Logs
+logs
 *.log
 server.log
 booking_system_log.txt
 
 # Build outputs
 dist/
+dist-ssr/
 build/
 
 # IDE files
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo
@@ -35,10 +40,16 @@ build/
 # OS files
 .DS_Store
 Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Temporary files
 *.tmp
 *.temp
+*.local
 
 # Backup files
 *.bak
