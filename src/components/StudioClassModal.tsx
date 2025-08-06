@@ -10,6 +10,7 @@ interface StudioClassModalProps {
   onClose: () => void;
   gymId: string;
   gymName: string;
+  user: any;
 }
 
 const StudioClassModal = ({ isOpen, onClose, gymId, gymName }: StudioClassModalProps) => {
@@ -64,7 +65,7 @@ const StudioClassModal = ({ isOpen, onClose, gymId, gymName }: StudioClassModalP
                   key={classItem.id}
                   {...classItem}
                   onBook={handleBookClass}
-                />
+                / user={user}>
               ))}
             </div>
           )}

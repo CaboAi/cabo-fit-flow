@@ -5,7 +5,8 @@ import PricingCard from "@/components/PricingCard";
 import { Button } from "@/components/ui/button";
 import { useClasses, useBookClass } from "@/hooks/useClasses";
 import { Search, Filter, Calendar, MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 // Import class images
 import yogaImage from "@/assets/yoga-class.jpg";
@@ -13,7 +14,7 @@ import hiitImage from "@/assets/hiit-class.jpg";
 import cyclingImage from "@/assets/cycling-class.jpg";
 import pilatesImage from "@/assets/pilates-class.jpg";
 
-const Index = () => {
+const Index = ({ user }: { user: any }) => {
   const { data: classes, isLoading, error } = useClasses();
   const bookClass = useBookClass();
   const [searchTerm, setSearchTerm] = useState("");
@@ -155,6 +156,7 @@ const Index = () => {
                   key={classItem.id} 
                   {...classItem} 
                   onBook={handleBookClass}
+                  user={user}
                 />
               ))
             )}

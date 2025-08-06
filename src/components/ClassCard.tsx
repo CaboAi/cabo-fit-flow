@@ -3,6 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Clock, MapPin, Users, Star } from "lucide-react";
 import { useState } from "react";
 import BookingModal from "./BookingModal";
+import { ClassCreditCost } from "./ClassCreditCost";
+import { EnhancedBookingButton } from "./EnhancedBookingButton";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ClassCardProps {
   id: string;
@@ -20,6 +23,7 @@ interface ClassCardProps {
   bookings_count: number;
   onBook?: (classId: string) => void;
   onBookingSuccess?: () => void;
+  user?: any;
 }
 
 const ClassCard = ({ 
@@ -32,7 +36,8 @@ const ClassCard = ({
   gym, 
   bookings_count,
   onBook,
-  onBookingSuccess
+  onBookingSuccess,
+  user
 }: ClassCardProps) => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const spotsLeft = capacity - bookings_count;
@@ -71,9 +76,7 @@ const ClassCard = ({
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
         />
         <div className="absolute top-3 left-3">
-          <span className="px-2 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">
-            ${price}
-          </span>
+          <ClassCreditCost classId={id} className="bg-white/95 backdrop-blur-sm rounded-full px-2 py-1" />
         </div>
         <div className="absolute top-3 right-3 bg-card/95 backdrop-blur-sm rounded-full px-2 py-1 border border-border">
           <div className="flex items-center gap-1">
@@ -88,9 +91,7 @@ const ClassCard = ({
           <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
             {title}
           </h3>
-          <span className="text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded">
-            ${price}
-          </span>
+          <ClassCreditCost classId={id} />
         </div>
         
         <div className="space-y-2 mb-4">
@@ -113,15 +114,27 @@ const ClassCard = ({
             <p className="text-sm text-muted-foreground">at</p>
             <p className="font-medium text-foreground">{gym.location}</p>
           </div>
-          <Button 
-            variant="accent" 
-            size="sm" 
-            className="min-w-20"
-            onClick={handleBookClick}
+          <EnhancedBookingButton 
+            classId={id} 
+            user={user}
+            className="min-w-20 px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors font-medium text-sm"
             disabled={spotsLeft <= 0}
+            onBookingSuccess={(result) => {
+              console.log('Class booked successfully!', result);
+              // Show success message with credit details
+              alert(`Successfully booked! ${result.credits_used || 1} credits used. Remaining balance: ${result.remaining_balance || 'N/A'}`);
+              handleBookingSuccess();
+              window.location.reload();
+            }}
+            onBookingError={(error) => {
+              console.log('Booking error:', error);
+              if (error !== 'Please sign in to book classes') {
+                alert('Booking failed: ' + error);
+              }
+            }}
           >
-            {spotsLeft <= 0 ? "Full" : "Book"}
-          </Button>
+            {spotsLeft <= 0 ? "Full" : "Book Class"}
+          </EnhancedBookingButton>
         </div>
       </CardContent>
 

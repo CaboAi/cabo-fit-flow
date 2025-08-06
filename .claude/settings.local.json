@@ -19,7 +19,8 @@
       "Bash(timeout:*)",
       "Bash(true)",
       "Bash(NODE_ENV=development node server.js)",
-      "Bash(env NODE_ENV=development node:*)"
+      "Bash(env NODE_ENV=development node:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   }

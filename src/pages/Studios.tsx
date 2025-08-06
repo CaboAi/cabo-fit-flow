@@ -6,7 +6,7 @@ import { MapPin, Clock, Star, Loader2 } from "lucide-react";
 import { useGyms } from "@/hooks/useClasses";
 import StudioClassModal from "@/components/StudioClassModal";
 
-const Studios = () => {
+const Studios = ({ user }: { user: any }) => {
   const { data: gyms, isLoading, error } = useGyms();
   const [selectedGymId, setSelectedGymId] = useState<string>("");
   const [selectedGymName, setSelectedGymName] = useState<string>("");
@@ -106,7 +106,7 @@ const Studios = () => {
         onClose={handleCloseModal}
         gymId={selectedGymId}
         gymName={selectedGymName}
-      />
+      / user={user}>
     </div>
   );
 };
