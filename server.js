@@ -1236,6 +1236,10 @@ app.post('/api/create-profile', async (req, res) => {
   }
 });
 
+// Credit System Routes
+const creditRoutes = require('./routes/credits');
+app.use('/api/credits', creditRoutes);
+
 // Apply error handling middleware
 app.use(errorHandler);
 
@@ -1265,6 +1269,13 @@ const server = app.listen(config.port, () => {
   console.log(`  POST /api/${config.apiVersion}/book`);
   console.log(`  GET  /api/${config.apiVersion}/bookings/:userId`);
   console.log(`  DELETE /api/${config.apiVersion}/bookings/:bookingId`);
+  console.log('\n💳 Credit System Endpoints:');
+  console.log('  GET  /api/credits/balance - Get user credit balance');
+  console.log('  GET  /api/credits/dashboard - Get credit dashboard');
+  console.log('  GET  /api/credits/transactions - Get transaction history');
+  console.log('  POST /api/credits/book-class - Book class with credits');
+  console.log('  POST /api/credits/cancel-booking - Cancel and refund credits');
+  console.log('  POST /api/credits/purchase - Purchase additional credits');
   console.log('\n🏷️  Valid Booking Types:', VALID_BOOKING_TYPES.join(', '));
   console.log('💳 Valid Payment Statuses:', VALID_PAYMENT_STATUSES.join(', '));
   console.log('\n✅ Server ready for requests!');

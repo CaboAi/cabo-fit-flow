@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(pip install:*)",
+      "Bash(python:*)",
+      "Bash(source:*)",
+      "Bash(mkdir:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Bash(npm run test-fk:*)",
+      "Bash(node:*)",
+      "Bash(npm start)",
+      "Bash(git push:*)",
+      "Bash(npm run test-profile:*)",
+      "Bash(npm run test-updated:*)",
+      "Bash(npm run test-api:*)",
+      "Bash(npm run demo:*)",
+      "Bash(timeout:*)",
+      "Bash(true)",
+      "Bash(NODE_ENV=development node server.js)",
+      "Bash(env NODE_ENV=development node:*)"
+    ],
+    "deny": []
+  }
+}
