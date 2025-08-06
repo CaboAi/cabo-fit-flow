@@ -42,12 +42,18 @@ const BookingModal = ({ isOpen, onClose, classData, onBookingSuccess }: BookingM
 
       const { data, error } = await supabase
         .from('profiles')
-        .select('id, monthly_credits, subscription_status')
+        .select('*')
         .eq('id', user.id)
         .single();
 
       if (error) throw error;
-      setUserProfile(data);
+      
+      // Set user profile with default values for missing fields
+      setUserProfile({
+        id: data.id,
+        monthly_credits: (data as any).monthly_credits || 4,
+        subscription_status: 'active'
+      });
     } catch (error) {
       console.error('Error fetching user profile:', error);
       toast({
@@ -94,9 +100,10 @@ const BookingModal = ({ isOpen, onClose, classData, onBookingSuccess }: BookingM
 
       // Update user credits if monthly booking
       if (selectedBookingType === 'monthly') {
+        const currentCredits = (userProfile as any).monthly_credits || 4;
         const { error: updateError } = await supabase
           .from('profiles')
-          .update({ monthly_credits: userProfile.monthly_credits - 1 })
+          .update({ monthly_credits: currentCredits - 1 } as any)
           .eq('id', user.id);
 
         if (updateError) throw updateError;

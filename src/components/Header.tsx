@@ -3,9 +3,28 @@ import { Search, User, Menu, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { CreditBadge } from "./CreditBadge";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const { toast } = useToast();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Get current user
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setUser(session?.user ?? null);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -75,6 +94,7 @@ const Header = () => {
         </nav>
         
         <div className="flex items-center gap-4">
+          <CreditBadge user={user} />
           <Button variant="ghost" className="font-semibold">
             <User className="w-4 h-4 mr-2" />
             PROFILE

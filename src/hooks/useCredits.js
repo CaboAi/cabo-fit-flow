@@ -2,7 +2,7 @@
 // Credit management hook for Cabo Fit Pass
 
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../integrations/supabase/client';
 
 export const useCredits = (user) => {
   const [balance, setBalance] = useState(null);
