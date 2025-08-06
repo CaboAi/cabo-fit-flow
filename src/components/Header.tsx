@@ -53,13 +53,13 @@ const Header = () => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-cf-gradient backdrop-blur-md border-b border-orange-200/20">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-        {/* CF Logo and Brand */}
-        <div className="flex items-center gap-3">
+        {/* CF Logo and Brand - NOW CLICKABLE HOME LINK */}
+        <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity cursor-pointer">
           <div className="cf-logo">
             {/* C and F added via CSS */}
           </div>
           <span className="text-2xl font-black text-white tracking-tight">CABO FIT PASS</span>
-        </div>
+        </Link>
         
         {/* Navigation */}
         <nav className="hidden md:flex items-center gap-12">
@@ -77,9 +77,6 @@ const Header = () => {
           </a>
           <Link to="/studios" className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide">
             STUDIOS
-          </Link>
-          <Link to="/dashboard" className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide">
-            DASHBOARD
           </Link>
           <a 
             href="/#plans" 
