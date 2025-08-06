@@ -61,7 +61,7 @@ const Header = () => {
           <span className="text-2xl font-black text-white tracking-tight">CABO FIT PASS</span>
         </Link>
         
-        {/* Navigation */}
+        {/* Navigation - UPDATED PRICING TO USE DEDICATED PAGE */}
         <nav className="hidden md:flex items-center gap-12">
           <a 
             href="/#classes" 
@@ -78,18 +78,9 @@ const Header = () => {
           <Link to="/studios" className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide">
             STUDIOS
           </Link>
-          <a 
-            href="/#plans" 
-            onClick={(e) => {
-              if (window.location.pathname === '/') {
-                e.preventDefault();
-                document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide"
-          >
+          <Link to="/pricing" className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide">
             PRICING
-          </a>
+          </Link>
         </nav>
         
         {/* User Actions - FIXED SIGN OUT BUTTON */}

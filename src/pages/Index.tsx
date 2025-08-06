@@ -1,9 +1,9 @@
 import Header from "@/components/Header";
 import ClassCard from "@/components/ClassCard";
-import PricingCard from "@/components/PricingCard";
 import { Button } from "@/components/ui/button";
 import { useClasses, useBookClass } from "@/hooks/useClasses";
 import { Search, Filter, Calendar, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { data: classes, isLoading, error } = useClasses();
@@ -13,72 +13,40 @@ const Index = () => {
     bookClass.mutate({ classId });
   };
 
-  // Sample pricing plans
-  const pricingPlans = [
-    {
-      name: "Basic",
-      price: "$650 MXN",
-      period: "month",
-      description: "Perfect for getting started with fitness",
-      features: [
-        "10 classes per month",
-        "Access to 30+ studios",
-        "Book up to 3 days ahead",
-        "Mobile app access",
-        "Class reminders"
-      ]
-    },
-    {
-      name: "Standard", 
-      price: "$950 MXN",
-      period: "month",
-      description: "Most popular choice for regular fitness enthusiasts",
-      features: [
-        "20 classes per month",
-        "Access to 50+ studios", 
-        "Book up to 7 days ahead",
-        "Premium class access",
-        "Guest passes (2/month)",
-        "Priority booking"
-      ],
-      isPopular: true
-    },
-    {
-      name: "Premium",
-      price: "$1,350 MXN", 
-      period: "month",
-      description: "Unlimited access for fitness lovers",
-      features: [
-        "Unlimited classes",
-        "All 50+ studios",
-        "Book up to 14 days ahead",
-        "VIP studio access",
-        "Guest passes (5/month)",
-        "Personal training discounts"
-      ]
-    },
-    {
-      name: "Tourist Pass",
-      price: "$450 MXN",
-      period: "week", 
-      description: "Short-term access for visitors",
-      features: [
-        "5 classes per week",
-        "All studio access",
-        "Instant booking",
-        "English support",
-        "No commitment"
-      ],
-      isTourist: true
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
+      {/* Hero Section */}
+      <section className="pt-32 pb-16 bg-background">
+        <div className="container mx-auto px-6 text-center">
+          <h1 className="text-5xl md:text-6xl font-black text-foreground mb-6">
+            Your Fitness
+            <br />
+            <span className="text-cf-orange">Freedom</span>
+          </h1>
+          <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
+            Unlimited access to premium fitness studios across Los Cabos. 
+            One membership, endless possibilities.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <Link to="/pricing">
+              <Button className="btn-cf-primary px-8 py-3 text-lg">
+                View Pricing Plans
+              </Button>
+            </Link>
+            <Link to="/studios">
+              <Button variant="outline" className="btn-cf-outline px-8 py-3 text-lg">
+                Explore Studios
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+      
       {/* Featured Classes Section */}
-      <section id="classes" className="py-24 bg-background">
+      <section id="classes" className="py-24 bg-muted/30">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
@@ -128,7 +96,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               <div className="col-span-full text-center py-8">
@@ -162,27 +130,31 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="plans" className="py-24 bg-muted/30">
+      {/* Stats Section */}
+      <section className="py-16 bg-background">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-              Choose Your Plan
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Flexible plans for locals and tourists alike
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto pt-8">
-            {pricingPlans.map((plan, index) => (
-              <PricingCard key={index} {...plan} />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
+            <div>
+              <div className="text-4xl font-black text-cf-orange mb-2">50+</div>
+              <div className="text-muted-foreground">Partner Studios</div>
+            </div>
+            <div>
+              <div className="text-4xl font-black text-cf-orange mb-2">200+</div>
+              <div className="text-muted-foreground">Daily Classes</div>
+            </div>
+            <div>
+              <div className="text-4xl font-black text-cf-orange mb-2">5000+</div>
+              <div className="text-muted-foreground">Happy Members</div>
+            </div>
+            <div>
+              <div className="text-4xl font-black text-cf-orange mb-2">24/7</div>
+              <div className="text-muted-foreground">App Support</div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section - FIXED LEARN MORE BUTTON */}
+      {/* CTA Section */}
       <section className="py-24 bg-cf-gradient">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">

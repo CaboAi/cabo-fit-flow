@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 import Studios from "./pages/Studios";
+import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import Auth from "./components/Auth";
 import UserDashboard from "./components/UserDashboard";
@@ -76,6 +77,10 @@ const App = () => {
               element={
                 user ? <UserDashboard user={user} /> : <Navigate to="/" replace />
               } 
+            />
+            <Route 
+              path="/pricing" 
+              element={<Pricing />} 
             />
             <Route 
               path="/profile" 
