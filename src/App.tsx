@@ -11,6 +11,7 @@ import Studios from "./pages/Studios";
 import NotFound from "./pages/NotFound";
 import Auth from "./components/Auth";
 import UserDashboard from "./components/UserDashboard";
+import { UserProfile } from "./components/UserProfile";
 
 const queryClient = new QueryClient();
 
@@ -73,7 +74,13 @@ const App = () => {
             <Route 
               path="/dashboard" 
               element={
-                user ? <UserDashboard /> : <Navigate to="/" replace />
+                user ? <UserDashboard user={user} /> : <Navigate to="/" replace />
+              } 
+            />
+            <Route 
+              path="/profile" 
+              element={
+                user ? <UserProfile user={user} /> : <Navigate to="/" replace />
               } 
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

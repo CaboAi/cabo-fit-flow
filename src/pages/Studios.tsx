@@ -106,7 +106,8 @@ const Studios = ({ user }: { user: any }) => {
         onClose={handleCloseModal}
         gymId={selectedGymId}
         gymName={selectedGymName}
-      / user={user}>
+        user={user}
+      />
     </div>
   );
 };

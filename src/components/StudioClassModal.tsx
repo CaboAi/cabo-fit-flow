@@ -65,7 +65,8 @@ const StudioClassModal = ({ isOpen, onClose, gymId, gymName }: StudioClassModalP
                   key={classItem.id}
                   {...classItem}
                   onBook={handleBookClass}
-                / user={user}>
+                  user={user}
+                />
               ))}
             </div>
           )}

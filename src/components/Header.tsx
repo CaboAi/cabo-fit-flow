@@ -95,9 +95,11 @@ const Header = () => {
         
         <div className="flex items-center gap-4">
           <CreditBadge user={user} />
-          <Button variant="ghost" className="font-semibold">
-            <User className="w-4 h-4 mr-2" />
-            PROFILE
+          <Button variant="ghost" className="font-semibold" asChild>
+            <Link to="/profile">
+              <User className="w-4 h-4 mr-2" />
+              PROFILE
+            </Link>
           </Button>
           <Button 
             variant="outline" 

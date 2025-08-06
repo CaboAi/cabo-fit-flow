@@ -2,7 +2,7 @@
 // Shows credit cost on class cards
 
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 
 export const ClassCreditCost = ({ classId, className = "" }) => {
   const [cost, setCost] = useState(1);

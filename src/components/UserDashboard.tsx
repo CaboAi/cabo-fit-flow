@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import Header from "./Header";
 
 interface UserProfile {
   id: string;
@@ -44,7 +45,11 @@ interface BookingHistory {
   };
 }
 
-const UserDashboard = () => {
+interface UserDashboardComponentProps {
+  user?: any;
+}
+
+const UserDashboard = ({ user: propUser }: UserDashboardComponentProps = {}) => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [bookingHistory, setBookingHistory] = useState<BookingHistory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,7 +62,7 @@ const UserDashboard = () => {
   const fetchUserData = async () => {
     try {
       setIsLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
+      const user = propUser || (await supabase.auth.getUser()).data.user;
       if (!user) return;
 
       // Fetch user profile
@@ -152,27 +157,31 @@ const UserDashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading dashboard...</p>
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="flex items-center justify-center h-96">
+          <div className="text-center">
+            <div className="w-8 h-8 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-muted-foreground">Loading dashboard...</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-6 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">My Dashboard</h1>
-        <p className="text-muted-foreground">Manage your fitness journey in Cabo</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <div className="container mx-auto px-6 py-8 pt-24">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-foreground mb-2">My Dashboard</h1>
+          <p className="text-muted-foreground">Track your credits, bookings, and fitness activities</p>
+        </div>
 
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="bookings">Bookings</TabsTrigger>
-          <TabsTrigger value="subscription">Subscription</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -255,6 +264,36 @@ const UserDashboard = () => {
                 <p className="text-sm text-muted-foreground">
                   {userProfile?.monthly_credits || 0} credits remaining this month
                 </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Quick Actions */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Activity className="h-5 w-5" />
+                Quick Actions
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Button className="h-16 flex flex-col gap-2" asChild>
+                  <a href="/#classes">
+                    <Calendar className="h-6 w-6" />
+                    Book a Class
+                  </a>
+                </Button>
+                <Button variant="outline" className="h-16 flex flex-col gap-2">
+                  <CreditCard className="h-6 w-6" />
+                  Buy Credits
+                </Button>
+                <Button variant="outline" className="h-16 flex flex-col gap-2" asChild>
+                  <a href="/profile">
+                    <User className="h-6 w-6" />
+                    View Profile
+                  </a>
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -375,83 +414,8 @@ const UserDashboard = () => {
             </CardContent>
           </Card>
         </TabsContent>
-
-        <TabsContent value="subscription" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5" />
-                Subscription Details
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {userProfile ? (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-medium text-foreground mb-2">Current Plan</h4>
-                      <p className="text-2xl font-bold text-primary">
-                        {userProfile.subscription_plan || 'Basic'}
-                      </p>
-                      <Badge 
-                        className={`mt-2 ${getSubscriptionColor(userProfile.subscription_status)} text-white`}
-                      >
-                        {userProfile.subscription_status}
-                      </Badge>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-medium text-foreground mb-2">Monthly Credits</h4>
-                      <p className="text-2xl font-bold text-accent">
-                        {userProfile.monthly_credits}
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Resets monthly
-                      </p>
-                    </div>
-                  </div>
-
-                  {userProfile.subscription_start_date && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <h4 className="font-medium text-foreground mb-2">Start Date</h4>
-                        <p className="text-foreground">
-                          {formatDate(userProfile.subscription_start_date)}
-                        </p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-medium text-foreground mb-2">Next Billing</h4>
-                        <p className="text-foreground">
-                          {userProfile.subscription_end_date 
-                            ? formatDate(userProfile.subscription_end_date)
-                            : 'N/A'
-                          }
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex gap-4 pt-4">
-                    <Button variant="outline" className="flex items-center gap-2">
-                      <Settings className="h-4 w-4" />
-                      Manage Subscription
-                    </Button>
-                    <Button variant="outline">
-                      Upgrade Plan
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <User className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">No subscription found</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 };
