@@ -15,33 +15,14 @@ export const ClassCreditCost: React.FC<ClassCreditCostProps> = ({ classId, class
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCost = async () => {
-      try {
-        const { data, error } = await supabase.rpc('get_class_credit_cost', {
-          p_class_id: classId
-        });
-        
-        if (error) {
-          console.warn('Credit cost function not available, using default');
-          setCost(1);
-        } else {
-          setCost(data || 1);
-        }
-        
-        // Check if current time is peak hours (6-9 AM, 5-8 PM)
-        const hour = new Date().getHours();
-        setIsPeak((hour >= 6 && hour <= 9) || (hour >= 17 && hour <= 20));
-      } catch (error) {
-        console.warn('Using default credit cost');
-        setCost(1);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (classId) {
-      fetchCost();
-    }
+    // Set default cost of 1 credit for all classes
+    setCost(1);
+    
+    // Check if current time is peak hours (6-9 AM, 5-8 PM)
+    const hour = new Date().getHours();
+    setIsPeak((hour >= 6 && hour <= 9) || (hour >= 17 && hour <= 20));
+    
+    setLoading(false);
   }, [classId]);
 
   if (loading) {
