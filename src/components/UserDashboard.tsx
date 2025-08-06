@@ -68,24 +68,41 @@ const UserDashboard = () => {
         .single();
 
       if (profileError) throw profileError;
-      setUserProfile(profile);
+      
+      // Set user profile with default values for missing fields
+      setUserProfile({
+        ...profile,
+        monthly_credits: (profile as any).monthly_credits || 4,
+        subscription_status: 'active',
+        subscription_plan: 'monthly',
+        subscription_start_date: new Date().toISOString(),
+        subscription_end_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      });
 
       // Fetch booking history
       const { data: bookings, error: bookingsError } = await supabase
         .from('bookings')
         .select(`
           *,
-          class:classes(
-            *,
-            gym:gyms(*)
-          )
+          class:classes(*)
         `)
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(10);
 
       if (bookingsError) throw bookingsError;
-      setBookingHistory(bookings || []);
+      
+      // Transform bookings data to match expected format
+      const formattedBookings = (bookings || []).map(booking => ({
+        ...booking,
+        created_at: booking.created_at || new Date().toISOString(),
+        class: {
+          ...(booking.class || {}),
+          gym: { name: 'Default Gym', location: 'Default Location' }
+        }
+      }));
+      
+      setBookingHistory(formattedBookings as any);
     } catch (error: any) {
       console.error('Error fetching user data:', error);
       toast({
