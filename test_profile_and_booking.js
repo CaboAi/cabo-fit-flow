@@ -112,6 +112,7 @@ async function createTestBooking() {
         type,
         payment_status,
         notes,
+        created_at,
         classes (
           title,
           price
@@ -142,7 +143,7 @@ async function createTestBooking() {
         const { data: existingBooking } = await supabase
           .from('bookings')
           .select(`
-            id, type, payment_status, notes,
+            id, type, payment_status, notes, created_at,
             classes (title),
             profiles (email, full_name)
           `)
@@ -157,7 +158,7 @@ async function createTestBooking() {
           console.log(`   User: ${existingBooking.profiles.full_name} (${existingBooking.profiles.email})`);
           console.log(`   Type: ${existingBooking.type}`);
           console.log(`   Status: ${existingBooking.payment_status}`);
-          console.log(`   ID: ${existingBooking.id}`);
+          console.log(`   Created: ${existingBooking.created_at}`);
         }
         return true;
       }
@@ -175,7 +176,7 @@ async function createTestBooking() {
     console.log(`   Type: ${booking.type}`);
     console.log(`   Payment Status: ${booking.payment_status}`);
     console.log(`   Notes: ${booking.notes}`);
-    console.log(`   ID: ${booking.id}`);
+    console.log(`   Created: ${booking.created_at}`);
     return true;
 
   } catch (error) {

@@ -408,268 +408,99 @@ app.get('/health', (req, res) => {
 
 // UI Routes
 
-// Enhanced homepage route
+// Home page
 app.get('/', async (req, res, next) => {
   try {
-    const statsData = await Promise.all([
-      supabase.from('classes').select('count', { count: 'exact', head: true }),
-      supabase.from('gyms').select('count', { count: 'exact', head: true }),
-      supabase.from('bookings').select('count', { count: 'exact', head: true })
+    // Get stats for home page
+    const [gymsData, classesData, bookingsData] = await Promise.all([
+      supabase.from('gyms').select('*', { count: 'exact', head: true }),
+      supabase.from('classes').select('*', { count: 'exact', head: true }),
+      supabase.from('bookings').select('*', { count: 'exact', head: true })
     ]);
 
     const stats = {
-      totalClasses: statsData[0].count || 0,
-      totalGyms: statsData[1].count || 0,
-      totalBookings: statsData[2].count || 0
+      gymCount: gymsData.count || 0,
+      classCount: classesData.count || 0,
+      bookingCount: bookingsData.count || 0
     };
 
-    res.render('enhanced_homepage', { stats });
+    res.render('index', { 
+      title: 'Cabo FitPass - Home', 
+      ...stats 
+    });
   } catch (error) {
-    logger.error('Homepage error:', error);
-    res.render('enhanced_homepage', { 
-      stats: { totalClasses: 0, totalGyms: 0, totalBookings: 0 }
+    logger.error('Error loading home page:', error);
+    res.render('index', { 
+      title: 'Cabo FitPass - Home',
+      gymCount: 0,
+      classCount: 0,
+      bookingCount: 0
     });
   }
 });
 
-// Enhanced classes route
-app.get('/classes', async (req, res, next) => {
+// Classes page
+app.get('/classes', async (req, res) => {
   try {
-    const { success, error } = req.query;
-    
+    logger.info('Loading classes UI page');
+
+    // Fetch classes with gym information
     const { data: classes, error: classesError } = await supabase
       .from('classes')
-      .select(`*, gyms(*), bookings(id, payment_status)`)
+      .select(`
+        *,
+        gyms (
+          id,
+          name,
+          location
+        )
+      `)
       .order('schedule');
 
     if (classesError) throw classesError;
 
-    res.render('enhanced_classes', {
-      classes: classes || [],
-      success: success ? decodeURIComponent(success) : null,
-      error: error ? decodeURIComponent(error) : null
-    });
-  } catch (error) {
-    logger.error('Classes error:', error);
-    res.render('enhanced_classes', { classes: [], error: 'Unable to load classes' });
-  }
-});
-
-// User dashboard route
-app.get('/dashboard', async (req, res, next) => {
-  try {
-    const userId = '661db286-593a-4c1e-8ce8-fb4ea43cd58a';
-    
-    const [profileResult, bookingsResult] = await Promise.all([
-      supabase.from('profiles').select('*').eq('id', userId).single(),
-      supabase.from('bookings').select(`*, classes(*, gyms(*))`).eq('user_id', userId).order('created_at', { ascending: false })
-    ]);
-
-    const profile = profileResult.data || { full_name: 'Demo User', email: 'demo@cabofit.com' };
-    const bookings = bookingsResult.data || [];
-
-    const stats = {
-      totalBookings: bookings.length,
-      upcomingBookings: bookings.filter(b => new Date(b.classes.schedule) > new Date()).length,
-      completedBookings: bookings.filter(b => b.payment_status === 'completed').length,
-      monthlyCredits: 4,
-      creditsUsed: bookings.filter(b => b.type === 'monthly' && new Date(b.created_at).getMonth() === new Date().getMonth()).length
-    };
-
-    res.render('user_dashboard', { profile, bookings, stats });
-  } catch (error) {
-    logger.error('Dashboard error:', error);
-    res.render('user_dashboard', {
-      profile: { full_name: 'Demo User', email: 'demo@cabofit.com' },
-      bookings: [],
-      stats: { totalBookings: 0, upcomingBookings: 0, completedBookings: 0, monthlyCredits: 4, creditsUsed: 0 }
-    });
-  }
-});
-
-// Authentication middleware to ensure user has a profile
-const ensureProfile = async (req, res, next) => {
-  try {
-    const userId = req.body.user_id || req.params.userId || req.query.user_id;
-    
-    if (!userId) {
-      return res.status(400).json({
-        success: false,
-        error: 'Missing user ID',
-        code: 'MISSING_USER_ID'
-      });
-    }
-
-    // Check if profile exists
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('id, full_name, role')
-      .eq('id', userId)
-      .single();
-
-    if (profileError && profileError.code === 'PGRST116') {
-      return res.status(404).json({
-        success: false,
-        error: 'User profile does not exist',
-        message: 'Please complete your profile setup before booking classes',
-        code: 'PROFILE_NOT_FOUND'
-      });
-    }
-
-    if (profileError) {
-      throw profileError;
-    }
-
-    req.userProfile = profile;
-    next();
-  } catch (error) {
-    next(error);
-  }
-};
-
-// Auth Routes
-app.get('/signup', (req, res) => {
-  res.render('signup', { 
-    title: 'Sign Up - Cabo Fit Pass',
-    error: null 
-  });
-});
-
-app.get('/login', (req, res) => {
-  res.render('login', { 
-    title: 'Login - Cabo Fit Pass',
-    error: null 
-  });
-});
-
-app.post('/api/auth/signup', async (req, res, next) => {
-  try {
-    const { email, password, full_name } = req.body;
-    
-    // Validate input
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        error: 'Email and password are required'
-      });
-    }
-
-    if (password.length < 8) {
-      return res.status(400).json({
-        success: false,
-        error: 'Password must be at least 8 characters long'
-      });
-    }
-
-    // Create user with Supabase Auth
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: full_name || email.split('@')[0]
-        }
-      }
-    });
-
-    if (error) {
-      if (error.message.includes('already registered')) {
-        return res.status(409).json({
-          success: false,
-          error: 'Email already registered',
-          message: 'Please sign in instead or use a different email'
+    // Get booking counts for each class and add status properties
+    const classesWithStatus = [];
+    if (classes && classes.length > 0) {
+      for (const classItem of classes) {
+        const bookedCount = await dbHelpers.getClassBookingCount(classItem.id);
+        const isFull = bookedCount >= classItem.capacity;
+        const isPast = new Date(classItem.schedule) < new Date();
+        
+        classesWithStatus.push({
+          ...classItem,
+          bookedCount,
+          isFull,
+          isPast
         });
       }
-      
-      return res.status(400).json({
-        success: false,
-        error: error.message
-      });
     }
 
-    // Note: Profile will be created automatically by database trigger
-    
-    res.json({
-      success: true,
-      message: 'Account created successfully! Please check your email to confirm.',
-      data: {
-        user: data.user,
-        session: data.session
-      }
+    res.render('classes', {
+      title: 'Cabo FitPass - Classes',
+      classes: classesWithStatus,
+      defaultUserId: '661db286-593a-4c1e-8ce8-fb4ea43cd58a', // Test user ID
+      success: req.query.success,
+      error: req.query.error
     });
 
   } catch (error) {
-    next(error);
+    logger.error('Error loading classes page:', error);
+    res.render('classes', {
+      title: 'Cabo FitPass - Classes',
+      classes: [],
+      defaultUserId: '661db286-593a-4c1e-8ce8-fb4ea43cd58a',
+      error: 'Unable to load classes. Please try again later.'
+    });
   }
 });
 
-app.post('/api/auth/login', async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    
-    // Validate input
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        error: 'Email and password are required'
-      });
-    }
-
-    // Sign in with Supabase Auth
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      return res.status(401).json({
-        success: false,
-        error: 'Invalid credentials',
-        message: 'Please check your email and password'
-      });
-    }
-
-    res.json({
-      success: true,
-      message: 'Login successful!',
-      data: {
-        user: data.user,
-        session: data.session
-      }
-    });
-
-  } catch (error) {
-    next(error);
-  }
-});
-
-app.post('/api/auth/logout', async (req, res, next) => {
-  try {
-    const { error } = await supabase.auth.signOut();
-    
-    if (error) {
-      return res.status(400).json({
-        success: false,
-        error: error.message
-      });
-    }
-
-    res.json({
-      success: true,
-      message: 'Logged out successfully'
-    });
-
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Enhanced booking form submission (updated route name to match template)
-app.post('/book', ensureProfile, async (req, res) => {
+// Book class form submission
+app.post('/book-class', async (req, res) => {
   try {
     const { user_id, class_id, type, notes, class_title } = req.body;
     
-    logger.info('Enhanced UI booking submission', { user_id, class_id, type, class_title });
+    logger.info('UI booking submission', { user_id, class_id, type, class_title });
 
     // Validate required fields
     if (!user_id || !class_id || !type) {
@@ -1073,7 +904,7 @@ app.get(`/api/${config.apiVersion}/bookings/:userId`, async (req, res, next) => 
         )
       `)
       .eq('user_id', userId)
-      .order('id', { ascending: false });
+      .order('created_at', { ascending: false });
 
     if (status) {
       query = query.eq('payment_status', status);
@@ -1172,67 +1003,6 @@ app.delete(`/api/${config.apiVersion}/bookings/:bookingId`, async (req, res, nex
 
   } catch (error) {
     next(error);
-  }
-});
-
-// Enhanced profile creation with auth user (SECURE VERSION)
-app.post('/api/create-profile', async (req, res) => {
-  try {
-    const userId = '661db286-593a-4c1e-8ce8-fb4ea43cd58a';
-    const userEmail = 'mariopjr91@gmail.com';
-    
-    console.log('Creating auth user and profile for user ID:', userId);
-
-    // Step 1: Create auth user first
-    try {
-      const { data: authUser, error: authError } = await supabase.auth.admin.createUser({
-        user_id: userId,
-        email: userEmail,
-        password: 'temp_password_123!', // Only used once, not logged
-        email_confirm: true,
-        user_metadata: {
-          full_name: 'Mario Polanco Jr'
-        }
-      });
-
-      if (authError && !authError.message.includes('already exists')) {
-        console.error('Auth user creation error (password not logged):', authError.message);
-        return res.json({ success: false, error: 'Failed to create auth user' });
-      }
-
-      console.log('Auth user created or exists for email:', userEmail);
-    } catch (authErr) {
-      console.log('Auth user might already exist, continuing with profile creation...');
-    }
-
-    // Step 2: Create profile
-    const profileData = {
-      id: userId,
-      email: userEmail,
-      full_name: 'Mario Polanco Jr',
-      role: 'user',
-      monthly_credits: 4,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
-    };
-
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .upsert([profileData])
-      .select('*')
-      .single();
-
-    if (profileError) {
-      console.error('Profile creation error:', profileError.message);
-      return res.json({ success: false, error: 'Failed to create profile' });
-    }
-
-    console.log('Profile created successfully for:', profile.email);
-    res.json({ success: true, profile: { id: profile.id, email: profile.email, full_name: profile.full_name } });
-
-  } catch (error) {
-    console.error('Unexpected error during profile creation');
-    res.json({ success: false, error: 'System error' });
   }
 });
 

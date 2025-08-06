@@ -9,7 +9,7 @@ const axios = require('axios');
 
 // Configuration
 const API_BASE_URL = 'http://localhost:3000/api/v1';
-const TEST_USER_ID = '40ec6001-c070-426a-9d8d-45326d0d7dac';
+const TEST_USER_ID = '661db286-593a-4c1e-8ce8-fb4ea43cd58a';
 
 class UpdatedBookingTester {
   constructor() {
