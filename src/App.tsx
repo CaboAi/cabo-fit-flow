@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Studios from "./pages/Studios";
 import NotFound from "./pages/NotFound";
 import Auth from "./components/Auth";
+import UserDashboard from "./components/UserDashboard";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,12 @@ const App = () => {
               path="/studios" 
               element={
                 user ? <Studios /> : <Navigate to="/" replace />
+              } 
+            />
+            <Route 
+              path="/dashboard" 
+              element={
+                user ? <UserDashboard /> : <Navigate to="/" replace />
               } 
             />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

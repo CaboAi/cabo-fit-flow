@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useEffect } from "react";
 
 export interface ClassWithGym {
   id: string;
@@ -19,7 +20,9 @@ export interface ClassWithGym {
 }
 
 export const useClasses = () => {
-  return useQuery({
+  const queryClient = useQueryClient();
+
+  const query = useQuery({
     queryKey: ["classes"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -38,6 +41,31 @@ export const useClasses = () => {
       })) as ClassWithGym[];
     },
   });
+
+  // Real-time subscription for bookings
+  useEffect(() => {
+    const channel = supabase
+      .channel('bookings-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'bookings'
+        },
+        () => {
+          // Invalidate and refetch classes when bookings change
+          queryClient.invalidateQueries({ queryKey: ["classes"] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
+  return query;
 };
 
 export const useGyms = () => {

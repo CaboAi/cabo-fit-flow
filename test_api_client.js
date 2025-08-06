@@ -12,7 +12,7 @@ const API_BASE_URL = 'http://localhost:3000';
 const API_VERSION = 'v1';
 
 // Test data
-const TEST_USER_ID = '661db286-593a-4c1e-8ce8-fb4ea43cd58a';
+const TEST_USER_ID = '40ec6001-c070-426a-9d8d-45326d0d7dac';
 const VALID_CLASS_IDS = [
   'e8c7dd4f-2346-484d-9933-2b338c405540', // Yoga Session
   'e0b37bc6-4d8d-4610-97fe-e94f7ba1ba06', // CrossFit WOD
