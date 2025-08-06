@@ -27,30 +27,38 @@ const PricingCard = ({
       return {
         badge: "bg-blue-500 text-white",
         ring: "ring-blue-500",
-        button: "bg-blue-500 hover:bg-blue-600 text-white",
-        accent: "text-blue-500"
+        button: "btn-pricing-basic",
+        accent: "text-blue-500",
+        price: "text-blue-500",
+        border: "border-blue-500"
       };
     } else if (name === "Premium") {
       return {
-        badge: "bg-amber-500 text-white",
-        ring: "ring-amber-500", 
-        button: "bg-amber-500 hover:bg-amber-600 text-white",
-        accent: "text-amber-500"
+        badge: "bg-yellow-500 text-white",
+        ring: "ring-yellow-500", 
+        button: "btn-pricing-premium",
+        accent: "text-yellow-500",
+        price: "text-yellow-500",
+        border: "border-yellow-500"
       };
     } else if (name === "Tourist Pass") {
       return {
-        badge: "bg-orange-500 text-white",
+        badge: "bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 text-white",
         ring: "ring-orange-500",
-        button: "bg-orange-500 hover:bg-orange-600 text-white", 
-        accent: "text-orange-500"
+        button: "btn-pricing-tourist",
+        accent: "text-orange-500",
+        price: "bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 bg-clip-text text-transparent",
+        border: "border-orange-500"
       };
     } else {
-      // Default green for Standard
+      // Standard - Green
       return {
-        badge: "bg-accent text-accent-foreground",
-        ring: "ring-accent",
-        button: "bg-accent hover:bg-accent/90 text-accent-foreground",
-        accent: "text-accent"
+        badge: "bg-green-500 text-white",
+        ring: "ring-green-500",
+        button: "btn-pricing-standard",
+        accent: "text-green-500",
+        price: "text-green-500",
+        border: "border-green-500"
       };
     }
   };
@@ -58,8 +66,8 @@ const PricingCard = ({
   const colorScheme = getColorScheme();
 
   return (
-    <Card className={`relative transition-all duration-300 hover:shadow-card hover:-translate-y-1 ${
-      isPopular ? `ring-2 ${colorScheme.ring} shadow-glow` : ''
+    <Card className={`relative transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 ${colorScheme.border} ${
+      isPopular ? `ring-2 ${colorScheme.ring} shadow-lg` : ''
     }`}>
       {isPopular && (
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
@@ -73,7 +81,7 @@ const PricingCard = ({
       <CardHeader className="text-center pb-4">
         <h3 className="text-xl font-bold text-foreground">{name}</h3>
         <div className="mt-2">
-          <span className={`text-3xl font-bold ${colorScheme.accent}`}>{price}</span>
+          <span className={`text-3xl font-bold ${colorScheme.price}`}>{price}</span>
           <span className="text-muted-foreground">/{period}</span>
         </div>
         <p className="text-muted-foreground mt-2">{description}</p>
@@ -90,7 +98,7 @@ const PricingCard = ({
         </ul>
         
         <button 
-          className={`w-full mt-6 h-11 rounded-md px-8 font-medium transition-colors ${colorScheme.button}`}
+          className={`w-full mt-6 h-11 rounded-md px-8 font-medium transition-all duration-300 ${colorScheme.button}`}
         >
           {isTourist ? 'Get Tourist Pass' : 'Start Membership'}
         </button>
