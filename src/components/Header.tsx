@@ -95,7 +95,7 @@ const Header = () => {
           </a>
         </nav>
         
-        {/* User Actions */}
+        {/* User Actions - FIXED SIGN OUT BUTTON */}
         <div className="flex items-center gap-4">
           <CreditBadge user={user} />
           <Button variant="ghost" className="font-semibold text-white hover:bg-white/10" asChild>
@@ -105,8 +105,7 @@ const Header = () => {
             </Link>
           </Button>
           <Button 
-            variant="outline" 
-            className="font-semibold border-white/30 text-white hover:bg-white hover:text-slate-800" 
+            className="font-semibold bg-slate-800 text-white border-2 border-slate-800 hover:bg-slate-900 hover:border-slate-900" 
             onClick={handleLogout}
           >
             <LogOut className="w-4 h-4 mr-2" />

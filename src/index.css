@@ -44,15 +44,28 @@
     --secondary-dark-light: 213 20% 25%; /* #34495E */
     --light-gray: 192 15% 94%; /* #ECF0F1 */
     
+    /* Pricing Plan Colors */
+    --basic-blue: 217 91% 60%; /* #3B82F6 */
+    --standard-green: 142 76% 36%; /* #10B981 */
+    --premium-gold: 45 93% 47%; /* #F59E0B */
+    --tourist-gradient-start: 217 91% 60%; /* Blue */
+    --tourist-gradient-middle: 142 76% 36%; /* Green */
+    --tourist-gradient-end: 45 93% 47%; /* Gold */
+    
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 100%);
     --gradient-secondary: linear-gradient(135deg, hsl(210 24% 16%) 0%, hsl(213 20% 25%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 50%, hsl(210 24% 16%) 100%);
+    --gradient-tourist: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(142 76% 36%) 50%, hsl(45 93% 47%) 100%);
+    --gradient-premium: linear-gradient(135deg, hsl(45 93% 47%) 0%, hsl(43 96% 56%) 100%);
     
     /* Shadows */
     --shadow-card: 0 4px 20px hsl(210 24% 16% / 0.08);
     --shadow-lg: 0 10px 25px hsl(210 24% 16% / 0.12);
     --shadow-glow: 0 8px 25px hsl(28 76% 52% / 0.25);
+    --shadow-blue: 0 8px 25px hsl(217 91% 60% / 0.25);
+    --shadow-green: 0 8px 25px hsl(142 76% 36% / 0.25);
+    --shadow-gold: 0 8px 25px hsl(45 93% 47% / 0.25);
 
     --radius: 0.5rem;
 
@@ -105,15 +118,25 @@
     --secondary-dark-light: 213 20% 25%;
     --light-gray: 210 24% 12%;
 
+    /* Pricing colors remain same in dark */
+    --basic-blue: 217 91% 60%;
+    --standard-green: 142 76% 36%;
+    --premium-gold: 45 93% 47%;
+
     /* Dark theme gradients */
     --gradient-primary: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 100%);
     --gradient-secondary: linear-gradient(135deg, hsl(210 24% 7%) 0%, hsl(210 24% 12%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 50%, hsl(210 24% 7%) 100%);
+    --gradient-tourist: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(142 76% 36%) 50%, hsl(45 93% 47%) 100%);
+    --gradient-premium: linear-gradient(135deg, hsl(45 93% 47%) 0%, hsl(43 96% 56%) 100%);
     
     /* Dark theme shadows */
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.4);
     --shadow-lg: 0 10px 25px hsl(0 0% 0% / 0.5);
     --shadow-glow: 0 8px 25px hsl(28 76% 52% / 0.3);
+    --shadow-blue: 0 8px 25px hsl(217 91% 60% / 0.3);
+    --shadow-green: 0 8px 25px hsl(142 76% 36% / 0.3);
+    --shadow-gold: 0 8px 25px hsl(45 93% 47% / 0.3);
 
     /* Dark sidebar colors */
     --sidebar-background: 210 24% 9%;
@@ -206,8 +229,95 @@
     color: hsl(var(--secondary-dark));
   }
 
+  /* Pricing Plan Card Styles */
+  .pricing-card-basic {
+    @apply bg-card border-2 border-blue-500 rounded-lg shadow-lg hover:shadow-blue transition-all duration-300;
+  }
+  
+  .pricing-card-standard {
+    @apply bg-card border-2 border-green-500 rounded-lg shadow-lg hover:shadow-green transition-all duration-300;
+  }
+  
+  .pricing-card-premium {
+    @apply bg-card border-2 border-yellow-500 rounded-lg shadow-lg hover:shadow-gold transition-all duration-300;
+  }
+  
+  .pricing-card-tourist {
+    @apply bg-card border-2 rounded-lg shadow-lg transition-all duration-300;
+    border-image: var(--gradient-tourist) 1;
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Pricing Button Styles */
+  .btn-pricing-basic {
+    @apply text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+    background: hsl(var(--basic-blue));
+    box-shadow: var(--shadow-blue);
+  }
+  
+  .btn-pricing-basic:hover {
+    @apply transform -translate-y-1;
+    background: hsl(217 91% 55%);
+  }
+  
+  .btn-pricing-standard {
+    @apply text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+    background: hsl(var(--standard-green));
+    box-shadow: var(--shadow-green);
+  }
+  
+  .btn-pricing-standard:hover {
+    @apply transform -translate-y-1;
+    background: hsl(142 76% 32%);
+  }
+  
+  .btn-pricing-premium {
+    @apply text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+    background: var(--gradient-premium);
+    box-shadow: var(--shadow-gold);
+  }
+  
+  .btn-pricing-premium:hover {
+    @apply transform -translate-y-1;
+  }
+  
+  .btn-pricing-tourist {
+    @apply text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300;
+    background: var(--gradient-tourist);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .btn-pricing-tourist:hover {
+    @apply transform -translate-y-1;
+  }
+
+  /* Plan Price Colors */
+  .text-basic-blue {
+    color: hsl(var(--basic-blue));
+  }
+  
+  .text-standard-green {
+    color: hsl(var(--standard-green));
+  }
+  
+  .text-premium-gold {
+    color: hsl(var(--premium-gold));
+  }
+
   /* CF Utility Classes */
   .shadow-cf-glow {
     box-shadow: var(--shadow-glow);
+  }
+  
+  .shadow-blue {
+    box-shadow: var(--shadow-blue);
+  }
+  
+  .shadow-green {
+    box-shadow: var(--shadow-green);
+  }
+  
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
   }
 }

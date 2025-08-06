@@ -1,6 +1,66 @@
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Hero = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    // Check if user is already logged in
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setIsLoggedIn(!!session);
+      }
+    );
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignIn = () => {
+    // Simulate login
+    toast({
+      title: "Sign in required",
+      description: "Please use Google authentication or contact support for demo access.",
+    });
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/dashboard`
+        }
+      });
+      
+      if (error) {
+        toast({
+          variant: "destructive",
+          title: "Authentication failed",
+          description: error.message,
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: "Please try again.",
+      });
+    }
+  };
+
+  // Don't render login form if user is logged in
+  if (isLoggedIn) {
+    return null;
+  }
+
   return (
     <section className="min-h-screen flex items-center justify-center bg-background">
       <div className="w-full max-w-md mx-auto px-6">
@@ -27,7 +87,7 @@ const Hero = () => {
           
           {/* Buttons with CF Colors */}
           <div className="space-y-4">
-            <Button className="btn-cf-primary w-full h-12">
+            <Button className="btn-cf-primary w-full h-12" onClick={handleGoogleLogin}>
               <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                 <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -60,7 +120,7 @@ const Hero = () => {
                 />
               </div>
               
-              <Button className="btn-cf-secondary w-full h-12">
+              <Button className="btn-cf-secondary w-full h-12" onClick={handleSignIn}>
                 Sign in
               </Button>
             </div>
