@@ -2,103 +2,128 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Updated Cabo FitPass Design System based on CF Logo Colors */
+/* All colors MUST be HSL format for Tailwind CSS variables */
 
 @layer base {
   :root {
-    /* Dark CaboFitPass theme - pure black, green, white */
-    --background: 0 0% 3%;
-    --foreground: 0 0% 98%;
+    /* CF Logo Colors - Light Theme */
+    --background: 0 0% 98%;
+    --foreground: 210 24% 16%;
 
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 210 24% 16%;
 
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 24% 16%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 3%;
+    --primary: 210 24% 16%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 8%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 210 16% 93%;
+    --secondary-foreground: 210 24% 16%;
 
-    --muted: 0 0% 8%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 210 16% 93%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 160 84% 39%;
+    /* CF Orange - Primary Accent */
+    --accent: 28 76% 52%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84% 37%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 10%;
-    --input: 0 0% 10%;
-    --ring: 160 84% 39%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 28 76% 52%;
 
-    /* Custom colors */
-    --accent-glow: 160 84% 50%;
+    /* Custom CF Colors */
+    --primary-orange: 28 76% 52%; /* #E67E22 */
+    --primary-orange-dark: 24 74% 42%; /* #D35400 */
+    --secondary-dark: 210 24% 16%; /* #2C3E50 */
+    --secondary-dark-light: 213 20% 25%; /* #34495E */
+    --light-gray: 192 15% 94%; /* #ECF0F1 */
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(210 24% 16%) 0%, hsl(213 20% 25%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 50%, hsl(210 24% 16%) 100%);
     
     /* Shadows */
-    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.5);
-    --shadow-lg: 0 10px 25px hsl(0 0% 0% / 0.3);
+    --shadow-card: 0 4px 20px hsl(210 24% 16% / 0.08);
+    --shadow-lg: 0 10px 25px hsl(210 24% 16% / 0.12);
+    --shadow-glow: 0 8px 25px hsl(28 76% 52% / 0.25);
 
     --radius: 0.5rem;
 
+    /* Sidebar colors */
     --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
+    --sidebar-foreground: 210 24% 16%;
+    --sidebar-primary: 28 76% 52%;
     --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 210 16% 93%;
+    --sidebar-accent-foreground: 210 24% 16%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 28 76% 52%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    /* CF Dark Theme */
+    --background: 210 24% 7%;
+    --foreground: 0 0% 98%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 24% 9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 24% 9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 210 24% 16%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 24% 12%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 24% 12%;
+    --muted-foreground: 215 16% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    /* CF Orange remains the same for dark theme */
+    --accent: 28 76% 52%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62% 31%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 210 24% 12%;
+    --input: 210 24% 12%;
+    --ring: 28 76% 52%;
+
+    /* Custom CF Colors for Dark Theme */
+    --primary-orange: 28 76% 52%;
+    --primary-orange-dark: 24 74% 42%;
+    --secondary-dark: 210 24% 16%;
+    --secondary-dark-light: 213 20% 25%;
+    --light-gray: 210 24% 12%;
+
+    /* Dark theme gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(210 24% 7%) 0%, hsl(210 24% 12%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(28 76% 52%) 0%, hsl(24 74% 42%) 50%, hsl(210 24% 7%) 100%);
+    
+    /* Dark theme shadows */
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.4);
+    --shadow-lg: 0 10px 25px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 8px 25px hsl(28 76% 52% / 0.3);
+
+    /* Dark sidebar colors */
+    --sidebar-background: 210 24% 9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 28 76% 52%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 210 24% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 210 24% 12%;
+    --sidebar-ring: 28 76% 52%;
   }
 }
 
@@ -115,5 +140,74 @@ All colors MUST be HSL.
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+  }
+}
+
+/* Custom CF Logo Component Styles */
+@layer components {
+  .cf-logo {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center relative overflow-hidden;
+    background: hsl(var(--secondary-dark));
+  }
+  
+  .cf-logo::before {
+    content: 'C';
+    @apply absolute left-2 text-xl font-black;
+    color: hsl(var(--primary-orange));
+  }
+  
+  .cf-logo::after {
+    content: 'F';
+    @apply absolute right-2 text-xl font-black;
+    color: hsl(var(--card));
+  }
+
+  /* CF Branded Button Styles */
+  .btn-cf-primary {
+    @apply bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-lg hover:shadow-xl transition-all duration-300;
+  }
+  
+  .btn-cf-secondary {
+    @apply bg-slate-800 text-white hover:bg-slate-900 border-2 border-slate-800 hover:border-slate-900;
+  }
+  
+  .btn-cf-outline {
+    @apply border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white bg-transparent;
+  }
+
+  /* CF Card Styles */
+  .card-cf {
+    @apply bg-card border border-border rounded-lg shadow-card hover:shadow-lg transition-shadow duration-300;
+  }
+  
+  .card-cf-hover {
+    @apply hover:-translate-y-1 hover:border-orange-200 transition-all duration-300;
+  }
+
+  /* CF Gradient Backgrounds */
+  .bg-cf-gradient {
+    background: var(--gradient-primary);
+  }
+  
+  .bg-cf-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .bg-cf-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  /* CF Text Colors */
+  .text-cf-orange {
+    color: hsl(var(--primary-orange));
+  }
+  
+  .text-cf-dark {
+    color: hsl(var(--secondary-dark));
+  }
+
+  /* CF Utility Classes */
+  .shadow-cf-glow {
+    box-shadow: var(--shadow-glow);
   }
 }

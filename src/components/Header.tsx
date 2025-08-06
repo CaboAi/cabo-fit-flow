@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Search, User, Menu, LogOut } from "lucide-react";
+import { User, LogOut, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -51,15 +51,17 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-cf-gradient backdrop-blur-md border-b border-orange-200/20">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+        {/* CF Logo and Brand */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center">
-            <span className="text-white font-black text-xl">F</span>
+          <div className="cf-logo">
+            {/* C and F added via CSS */}
           </div>
-          <span className="text-2xl font-black text-foreground tracking-tight">CABO FIT PASS</span>
+          <span className="text-2xl font-black text-white tracking-tight">CABO FIT PASS</span>
         </div>
         
+        {/* Navigation */}
         <nav className="hidden md:flex items-center gap-12">
           <a 
             href="/#classes" 
@@ -69,14 +71,14 @@ const Header = () => {
                 document.getElementById('classes')?.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide"
+            className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide"
           >
             CLASSES
           </a>
-          <Link to="/studios" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+          <Link to="/studios" className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide">
             STUDIOS
           </Link>
-          <Link to="/dashboard" className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide">
+          <Link to="/dashboard" className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide">
             DASHBOARD
           </Link>
           <a 
@@ -87,15 +89,16 @@ const Header = () => {
                 document.getElementById('plans')?.scrollIntoView({ behavior: 'smooth' });
               }
             }}
-            className="text-muted-foreground hover:text-foreground transition-colors font-semibold tracking-wide"
+            className="text-white/80 hover:text-white transition-colors font-semibold tracking-wide"
           >
             PRICING
           </a>
         </nav>
         
+        {/* User Actions */}
         <div className="flex items-center gap-4">
           <CreditBadge user={user} />
-          <Button variant="ghost" className="font-semibold" asChild>
+          <Button variant="ghost" className="font-semibold text-white hover:bg-white/10" asChild>
             <Link to="/profile">
               <User className="w-4 h-4 mr-2" />
               PROFILE
@@ -103,7 +106,7 @@ const Header = () => {
           </Button>
           <Button 
             variant="outline" 
-            className="font-semibold" 
+            className="font-semibold border-white/30 text-white hover:bg-white hover:text-slate-800" 
             onClick={handleLogout}
           >
             <LogOut className="w-4 h-4 mr-2" />
@@ -111,7 +114,8 @@ const Header = () => {
           </Button>
         </div>
         
-        <Button variant="ghost" size="icon" className="md:hidden">
+        {/* Mobile Menu Button */}
+        <Button variant="ghost" size="icon" className="md:hidden text-white">
           <Menu className="h-6 w-6" />
         </Button>
       </div>
