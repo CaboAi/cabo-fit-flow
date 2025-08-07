@@ -63,7 +63,7 @@ const App = () => {
             <Route 
               path="/" 
               element={
-                user ? <Index user={user} /> : <Auth onAuthSuccess={handleAuthSuccess} />
+                user ? <Index /> : <Auth onAuthSuccess={handleAuthSuccess} />
               } 
             />
             <Route 

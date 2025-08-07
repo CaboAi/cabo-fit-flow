@@ -83,10 +83,10 @@ export const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
         full_name: profile?.full_name || user.user_metadata?.full_name || '',
         email: user.email || '',
         phone: profile?.phone || user.user_metadata?.phone || '',
-        subscription_plan: profile?.subscription_plan || 'Basic',
-        subscription_status: profile?.subscription_status || 'active',
-        subscription_start_date: profile?.subscription_start_date || new Date().toISOString(),
-        subscription_end_date: profile?.subscription_end_date || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+        subscription_plan: (profile as any)?.subscription_plan || 'Basic',
+        subscription_status: (profile as any)?.subscription_status || 'active',
+        subscription_start_date: (profile as any)?.subscription_start_date || new Date().toISOString(),
+        subscription_end_date: (profile as any)?.subscription_end_date || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
         created_at: profile?.created_at || user.created_at || new Date().toISOString()
       };
 

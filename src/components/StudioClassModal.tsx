@@ -13,7 +13,7 @@ interface StudioClassModalProps {
   user: any;
 }
 
-const StudioClassModal = ({ isOpen, onClose, gymId, gymName }: StudioClassModalProps) => {
+const StudioClassModal = ({ isOpen, onClose, gymId, gymName, user }: StudioClassModalProps) => {
   const { data: classes, isLoading, error } = useClassesByGym(gymId);
   const bookClass = useBookClass();
 

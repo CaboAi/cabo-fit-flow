@@ -4,8 +4,10 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../integrations/supabase/client';
 
-export const useCredits = (user) => {
-  const [balance, setBalance] = useState(null);
+export type BookingResult = { success: boolean; error?: string; current_balance?: number; required_credits?: number; shortage?: number };
+
+export const useCredits = (user: { id: string } | null) => {
+  const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Fetch credit balance
@@ -13,12 +15,13 @@ export const useCredits = (user) => {
     if (!user) return;
     
     try {
-      const { data, error } = await supabase.rpc('get_user_credit_balance', {
+      const { data, error } = await (supabase as any).rpc('get_user_credit_balance', {
         p_user_id: user.id
       });
       
       if (!error) {
-        setBalance(data);
+        const num = typeof data === 'number' ? data : Number(data);
+        setBalance(Number.isFinite(num) ? (num as number) : 0);
       }
     } catch (error) {
       console.error('Error fetching credits:', error);
@@ -27,7 +30,7 @@ export const useCredits = (user) => {
   };
 
   // Book class with credits
-  const bookWithCredits = async (classId) => {
+  const bookWithCredits = async (classId: string): Promise<BookingResult> => {
     if (!user) return { success: false, error: 'Not authenticated' };
     
     setLoading(true);
@@ -41,11 +44,14 @@ export const useCredits = (user) => {
       if (!error && data) {
         // Refresh balance after booking
         await fetchBalance();
-        return data;
+        if (typeof data === 'object' && data !== null && 'success' in (data as any)) {
+          return data as BookingResult;
+        }
+        return { success: true };
       }
       
-      return { success: false, error: error?.message || 'Booking failed' };
-    } catch (error) {
+      return { success: false, error: (error as any)?.message || 'Booking failed' };
+    } catch (error: any) {
       return { success: false, error: error.message };
     } finally {
       setLoading(false);
@@ -53,13 +59,13 @@ export const useCredits = (user) => {
   };
 
   // Get class credit cost
-  const getClassCost = async (classId) => {
+  const getClassCost = async (classId: string): Promise<number> => {
     try {
-      const { data, error } = await supabase.rpc('get_class_credit_cost', {
+      const { data, error } = await (supabase as any).rpc('get_class_credit_cost', {
         p_class_id: classId
       });
-      
-      return !error ? data : 1; // Default to 1 credit
+      const num = typeof data === 'number' ? data : Number(data);
+      return !error && Number.isFinite(num) ? (num as number) : 1; // Default to 1 credit
     } catch (error) {
       return 1;
     }
