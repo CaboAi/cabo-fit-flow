@@ -358,6 +358,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      book_class_with_credits: {
+        Args: { p_user_id: string; p_class_id: string; p_booking_type?: string }
+        Returns: Json
+      }
       get_or_create_profile: {
         Args: { user_id: string }
         Returns: {
