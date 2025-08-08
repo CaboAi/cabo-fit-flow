@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_audit_log: {
+        Row: {
+          action: string
+          booking_id: string | null
+          created_at: string | null
+          id: string
+          new_data: Json | null
+          old_data: Json | null
+          timestamp: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          booking_id?: string | null
+          created_at?: string | null
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          timestamp?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          booking_id?: string | null
+          created_at?: string | null
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          timestamp?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           class_id: string | null
@@ -291,6 +324,27 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           created_at: string | null
@@ -358,9 +412,45 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_user_credits: {
+        Args:
+          | {
+              p_user_id: string
+              p_amount: number
+              p_type?: string
+              p_description?: string
+            }
+          | {
+              user_id: string
+              amount: number
+              source?: string
+              description?: string
+            }
+        Returns: boolean
+      }
       book_class_with_credits: {
         Args: { p_user_id: string; p_class_id: string; p_booking_type?: string }
         Returns: Json
+      }
+      deduct_user_credits: {
+        Args:
+          | {
+              p_user_id: string
+              p_amount: number
+              p_description?: string
+              p_booking_id?: string
+            }
+          | {
+              user_id: string
+              amount: number
+              class_id?: string
+              description?: string
+            }
+        Returns: Json
+      }
+      get_class_credit_cost: {
+        Args: { class_id: string } | { p_class_id: string }
+        Returns: number
       }
       get_or_create_profile: {
         Args: { user_id: string }
@@ -374,9 +464,26 @@ export type Database = {
           updated_at: string
         }[]
       }
+      get_user_credit_balance: {
+        Args: { p_user_id: string } | { user_id: string }
+        Returns: number
+      }
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: boolean
+      }
+      validate_booking_data: {
+        Args:
+          | { p_booking_date: string; p_user_id: number }
+          | { p_booking_date: string; p_user_id: number; p_resource_id: number }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "gym_owner" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -503,6 +610,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "gym_owner", "user"],
+    },
   },
 } as const
