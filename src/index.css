@@ -7,35 +7,28 @@
 
 @layer base {
   :root {
-    /* CF Logo Colors - Light Theme */
-    --background: 0 0% 98%;
-    --foreground: 210 24% 16%;
-
+    /* ORANGE THEME - #E67E22 */
+    --primary: 28 76% 52%;  /* This is #E67E22 in HSL */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Keep these the same */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
-    --card-foreground: 210 24% 16%;
-
+    --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 210 24% 16%;
-
-    --primary: 210 24% 16%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 210 16% 93%;
-    --secondary-foreground: 210 24% 16%;
-
-    --muted: 210 16% 93%;
-    --muted-foreground: 215 16% 47%;
-
-    /* CF Orange - Primary Accent */
-    --accent: 28 76% 52%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 84% 37%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 28 76% 52%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 28 76% 52%;  /* Orange ring */
 
     /* Custom CF Colors */
     --primary-orange: 28 76% 52%; /* #E67E22 */
@@ -81,35 +74,28 @@
   }
 
   .dark {
-    /* CF Dark Theme */
-    --background: 210 24% 7%;
-    --foreground: 0 0% 98%;
-
-    --card: 210 24% 9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 210 24% 9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 210 24% 16%;
-
-    --secondary: 210 24% 12%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 210 24% 12%;
-    --muted-foreground: 215 16% 60%;
-
-    /* CF Orange remains the same for dark theme */
-    --accent: 28 76% 52%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62% 31%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 210 24% 12%;
-    --input: 210 24% 12%;
-    --ring: 28 76% 52%;
+    /* ORANGE THEME FOR DARK MODE */
+    --primary: 28 76% 52%;  /* Same orange */
+    --primary-foreground: 0 0% 100%;
+    
+    /* Dark mode colors */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 28 76% 52%;  /* Orange ring */
 
     /* Custom CF Colors for Dark Theme */
     --primary-orange: 28 76% 52%;
