@@ -1,0 +1,23 @@
+/* FORCE CSS GENERATION */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force generation of common classes */
+.hidden { display: none; }
+.block { display: block; }
+.flex { display: flex; }
+.bg-primary { background-color: hsl(var(--primary)); }
+.text-primary { color: hsl(var(--primary)); }
+.border { border-width: 1px; }
+.rounded { border-radius: 0.25rem; }
+.p-4 { padding: 1rem; }
+.m-4 { margin: 1rem; }
+
+/* Orange theme colors */
+:root {
+  --primary: 28 76% 52%; /* #E67E22 */
+  --primary-foreground: 0 0% 100%;
+  --background: 0 0% 100%;
+  --foreground: 222.2 84% 4.9%;
+}
