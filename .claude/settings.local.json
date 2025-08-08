@@ -20,7 +20,10 @@
       "Bash(true)",
       "Bash(NODE_ENV=development node server.js)",
       "Bash(env NODE_ENV=development node:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(npx:*)",
+      "Bash(PGPASSWORD=\"GuZFBM0fLOFE1234\" psql -h aws-0-us-west-1.pooler.supabase.com -p 6543 -U postgres.hvfbsrtjfkdutbyjmkmt -d postgres -c \"SELECT table_name FROM information_schema.tables WHERE table_schema = ''public'' AND table_name IN (''user_credits'', ''studios'', ''classes'', ''bookings'');\")"
     ],
     "deny": []
   }
